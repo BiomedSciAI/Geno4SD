@@ -17,3 +17,9 @@ Geno4SD provides access to individual tools as well as detailed use cases for an
 3. RubricOE: is a cross-validated  machine learning framework with feature ranking described and multiple levels of cross validation to obtain interpretable genetic and non-genetic features from genomic or transcriptomic data combined.
 
 
+## Installation and Tutorials
+In our detailed [Online Documentation](https://pages.github.com/ComputationalGenomics/Geno4SD/) you'll find:
+* Installation [instructions]().  
+* An overview of Geno4SD's [main components]() and [API]()
+* An end-to-end [tutorial]() using a publicly available dataset.
+
