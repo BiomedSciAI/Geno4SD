@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geno4sd.utils.read_plink &mdash; Geno4SD  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Geno4SD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/installation.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/overview.html">Overview of Geno4SD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reveal.html">ReVeaL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rubricoe.html">RubricOE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.html">geno4sd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.ml_tools.html">ML Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Geno4SD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>geno4sd.utils.read_plink</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for geno4sd.utils.read_plink</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">struct</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+
+
+<span class="c1"># for each row (1st index) of samples, the columns contain allele info:</span>
+<span class="c1">#   0 = homozygous in 1st allele listed in the .bim file</span>
+<span class="c1">#   1 = missing information</span>
+<span class="c1">#   2 = heterozygous -- one of each of the alleles in the .map file</span>
+<span class="c1">#   3 = homozygous in the rt hand allele in the .bim</span>
+<span class="c1">#  in https://www.cog-genomics.org/plink/1.9/formats#bed</span>
+
+<div class="viewcode-block" id="parse_binary_plink"><a class="viewcode-back" href="../../../api/geno4sd.utils.read_plink.html#geno4sd.utils.read_plink.parse_binary_plink">[docs]</a><span class="k">def</span> <span class="nf">parse_binary_plink</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reads bed, bim and fam files and parses their contents into three arrays, respectively, </span>
+<span class="sd">        or optionally into a dataframe.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename: str</span>
+<span class="sd">            Name (without extension) of the plink files to parse.</span>
+<span class="sd">        n_jobs: int, default 1</span>
+<span class="sd">            Number of threads to use when parsing.</span>
+<span class="sd">        verbose: int, default 0</span>
+<span class="sd">            Level of verbosity. 0 Omits all output.</span>
+<span class="sd">        dataframe: bool, default False</span>
+<span class="sd">            Flag to indicate whether to return three arrays or a pandas dataframe.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Read in .bim file (genotype map file) w/ SNP label, chromosome, offset, and alleles</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;.bim&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+        <span class="n">bim</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">fin</span><span class="p">]</span>
+
+    <span class="n">V</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bim</span><span class="p">)</span>   <span class="c1"># Number of variants</span>
+    <span class="n">bimA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bim</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">bim</span>
+
+    <span class="c1"># read in .fam file - lists family and individual ID&#39;s + parents, pheno, etc</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;.fam&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+        <span class="n">fam</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">fin</span><span class="p">]</span>
+
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fam</span><span class="p">)</span>   <span class="c1"># number of samples</span>
+    <span class="n">famA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fam</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">fam</span>
+
+    <span class="n">S</span> <span class="o">=</span> <span class="p">(</span><span class="n">N</span> <span class="o">//</span> <span class="mi">4</span>  <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">))</span> <span class="o">*</span> <span class="n">V</span> <span class="o">+</span> <span class="mi">3</span>   <span class="c1"># length of .bed file</span>
+
+    <span class="n">stime</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    
+    <span class="n">bedBraw</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">RawArray</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+    <span class="n">bedB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">bedBraw</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ubyte</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">copyto</span><span class="p">(</span><span class="n">bedB</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="n">filename</span> <span class="o">+</span> <span class="s1">&#39;.bed&#39;</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ubyte</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">S</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;time to depack = &#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">stime</span><span class="p">)</span>
+
+    <span class="n">stime</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    
+    <span class="c1">#Space for results </span>
+    <span class="c1">#bedA = np.empty(shape = (N, V), dtype = np.ubyte)</span>
+    <span class="n">bedAraw</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">RawArray</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">N</span> <span class="o">*</span> <span class="n">V</span><span class="p">)</span>
+    <span class="n">bedA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">bedAraw</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ubyte</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">V</span><span class="p">))</span>
+    
+    <span class="k">if</span> <span class="n">verbose</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;time to allocate space = &#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">stime</span><span class="p">)</span>
+    
+    <span class="c1">#intermediate storage with rows of variants for samples in columns aligned</span>
+    <span class="c1">#bedC = np.empty((V, (N // 4 + (1 if N % 4 != 0 else 0))), dtype = np.ubyte)</span>
+    <span class="n">bedCraw</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">RawArray</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">V</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span> <span class="o">//</span> <span class="mi">4</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)))</span>
+    <span class="n">bedC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">bedCraw</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ubyte</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">V</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span> <span class="o">//</span> <span class="mi">4</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">))))</span>
+    
+    
+    
+    <span class="c1">#align buffer with rows and columns to pick out nibbles</span>
+    <span class="k">def</span> <span class="nf">slicer1</span><span class="p">(</span><span class="n">bedBraw</span><span class="p">,</span> <span class="n">bedCraw</span><span class="p">,</span> <span class="n">ll</span><span class="p">,</span> <span class="n">ul</span><span class="p">):</span>
+        <span class="n">bedB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">bedBraw</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ubyte</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+        <span class="n">bedC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">bedCraw</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ubyte</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">V</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span> <span class="o">//</span> <span class="mi">4</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">))))</span>
+        <span class="c1">#for row in range(V):</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ll</span><span class="p">,</span> <span class="n">ul</span><span class="p">):</span>
+            <span class="n">lcut</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="p">(</span><span class="n">N</span> <span class="o">//</span> <span class="mi">4</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">))</span> <span class="o">*</span> <span class="n">row</span>
+            <span class="n">ucut</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="p">(</span><span class="n">N</span> <span class="o">//</span> <span class="mi">4</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">bedC</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="n">ucut</span> <span class="o">-</span> <span class="n">lcut</span><span class="p">]</span> <span class="o">=</span> <span class="n">bedB</span><span class="p">[</span><span class="n">lcut</span><span class="p">:</span> <span class="n">ucut</span><span class="p">]</span> 
+    
+    <span class="n">splits</span> <span class="o">=</span> <span class="p">[(</span><span class="n">k</span> <span class="o">*</span> <span class="n">V</span><span class="p">)</span> <span class="o">//</span> <span class="n">n_jobs</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_jobs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    
+    <span class="n">procs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">):</span>
+        <span class="n">procs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">slicer1</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">bedBraw</span><span class="p">,</span> <span class="n">bedCraw</span><span class="p">,</span> <span class="n">splits</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">splits</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="p">)))</span>
+        <span class="n">procs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">):</span>
+        <span class="n">procs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        
+    <span class="k">del</span> <span class="n">bedBraw</span>
+    <span class="k">del</span> <span class="n">bedB</span>
+    
+    
+    <span class="k">def</span> <span class="nf">slicer2</span><span class="p">(</span><span class="n">bedAraw</span><span class="p">,</span> <span class="n">bedCraw</span><span class="p">,</span> <span class="n">ll</span><span class="p">,</span> <span class="n">ul</span><span class="p">):</span>
+        
+        <span class="n">bedA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">bedAraw</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ubyte</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">V</span><span class="p">))</span>
+        <span class="n">bedC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">bedCraw</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ubyte</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">V</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span> <span class="o">//</span> <span class="mi">4</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">))))</span>
+
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ll</span><span class="p">,</span> <span class="n">ul</span><span class="p">):</span>
+            <span class="c1">#bedA[col, :] = np.vectorize(lambda x: ((x &gt;&gt; ( 2 * (col % 4))) &amp; 3))(bedC[:, col // 4])</span>
+            <span class="n">bedA</span><span class="p">[</span><span class="n">col</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">right_shift</span><span class="p">(</span><span class="n">bedC</span><span class="p">[:,</span> <span class="n">col</span> <span class="o">//</span> <span class="mi">4</span><span class="p">],</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">col</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)))</span> <span class="o">&amp;</span> <span class="mi">3</span>
+            
+    <span class="n">splits</span> <span class="o">=</span> <span class="p">[(</span><span class="n">k</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span> <span class="o">//</span> <span class="n">n_jobs</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_jobs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    
+    <span class="n">procs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">):</span>
+        <span class="n">procs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="n">slicer2</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">bedAraw</span><span class="p">,</span> <span class="n">bedCraw</span><span class="p">,</span> <span class="n">splits</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">splits</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="p">)))</span>
+        <span class="n">procs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">):</span>
+        <span class="n">procs</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        
+    <span class="k">del</span> <span class="n">bedCraw</span>
+    <span class="k">del</span> <span class="n">bedC</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;time to decode = &#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">stime</span><span class="p">)</span>
+    <span class="n">phenotypes</span> <span class="o">=</span> <span class="n">famA</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">dataframe</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">bedA</span><span class="p">,</span> <span class="n">phenotypes</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">),</span> <span class="n">index</span> <span class="o">=</span> <span class="n">famA</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">bimA</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="p">[</span><span class="s2">&quot;phenotype&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">bedA</span><span class="p">,</span> <span class="n">bimA</span><span class="p">,</span> <span class="n">famA</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, &#34;IBM Corp..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

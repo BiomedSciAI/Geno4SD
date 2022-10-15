@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geno4sd.ml_tools.ReVeaL &mdash; Geno4SD  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Geno4SD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/installation.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/overview.html">Overview of Geno4SD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reveal.html">ReVeaL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rubricoe.html">RubricOE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.html">geno4sd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.ml_tools.html">ML Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Geno4SD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>geno4sd.ml_tools.ReVeaL</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for geno4sd.ml_tools.ReVeaL</h1><div class="highlight"><pre>
+<span></span><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Filippo Utro&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2022, IBM Research&quot;</span>
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.0.1&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Filippo Utro&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;futro@us.ibm.com&quot;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">shuffle</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
+
+
+<span class="k">def</span> <span class="nf">_compute_count_in_region</span><span class="p">(</span><span class="n">sample_data</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">sample_data</span><span class="p">[(</span><span class="n">sample_data</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">start</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sample_data</span><span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">stop</span><span class="p">)]</span>  <span class="c1"># fully contained</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">sample_data</span><span class="p">[(</span><span class="n">sample_data</span><span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">start</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sample_data</span><span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">stop</span><span class="p">)]</span>  <span class="c1"># partially contained</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">sample_data</span><span class="p">[(</span><span class="n">sample_data</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">start</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">sample_data</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">stop</span><span class="p">)]</span>  <span class="c1"># partially contained</span>
+<span class="c1">#   d = sample_data[(sample_data[&#39;start&#39;] &gt;= start) &amp; (sample_data[&#39;stop&#39;] &gt;= stop) &amp; (sample_data[&#39;start&#39;] &lt;= stop)]  # partially contained</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">])</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span> <span class="c1">#.append(d)</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;samples&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="compute_mutational_load"><a class="viewcode-back" href="../../../api/geno4sd.ml_tools.ReVeaL.html#geno4sd.ml_tools.ReVeaL.compute_mutational_load">[docs]</a><span class="k">def</span> <span class="nf">compute_mutational_load</span><span class="p">(</span><span class="n">sample_data</span><span class="p">,</span> <span class="n">samples</span><span class="p">,</span> <span class="n">regions_size</span><span class="p">,</span> <span class="n">chromosome</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to compute the mutational load files</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        sample_data: </span>
+<span class="sd">            panda dataframe containing the sample with relative start and stop alteration</span>
+<span class="sd">        samples: </span>
+<span class="sd">            list of all samples</span>
+<span class="sd">        regions_size: </span>
+<span class="sd">            panda dataframe containing the start and stop of the region of interest</span>
+<span class="sd">        chromosome: int</span>
+<span class="sd">            relative to the chromosome of interest</span>
+<span class="sd">        window_size: int</span>
+<span class="sd">            relative the the window size, by default the entire region is used. Note if the window size is not multiple of the region size the last window will be the remaining region portion.</span>
+<span class="sd">        out_file_name: str, optional</span>
+<span class="sd">            if provided the mutational load table is stored as csv file.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        a dataframe containing the mutational load, each row is a sample, the column is a window</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mutation_load_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">index_region</span><span class="p">,</span> <span class="n">row_region</span> <span class="ow">in</span> <span class="n">regions_size</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">row_region</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="n">row_region</span><span class="p">[</span><span class="s1">&#39;stop&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">window_size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">window_size</span>
+            <span class="k">for</span> <span class="n">bin_window</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">stop</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">/</span><span class="n">window_size</span><span class="p">)):</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">end</span> <span class="o">+</span> <span class="p">(</span><span class="n">bin_window</span> <span class="o">*</span> <span class="n">window_size</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">end</span><span class="o">&gt;</span><span class="n">stop</span><span class="p">:</span>
+                    <span class="n">end</span> <span class="o">=</span> <span class="n">stop</span>
+                <span class="n">count_in_window</span> <span class="o">=</span> <span class="n">_compute_count_in_region</span><span class="p">(</span><span class="n">sample_data</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+                <span class="n">mutation_load_data_bin</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+                <span class="n">mutation_load_data_bin</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_in_window</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span>
+                <span class="n">mutation_load_data_bin</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_in_window</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span>
+                <span class="n">missing_sample_in_window</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">((</span><span class="nb">set</span><span class="p">(</span><span class="n">mutation_load_data_bin</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">])))</span>
+                <span class="n">tmp_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;samples&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">missing_sample_in_window</span><span class="p">),</span>
+                                         <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">missing_sample_in_window</span><span class="p">)})</span>
+                
+                <span class="n">mutation_load_data_bin</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">mutation_load_data_bin</span><span class="p">,</span><span class="n">tmp_data</span><span class="p">])</span>
+                <span class="n">mutation_load_data_bin</span><span class="p">[</span><span class="s1">&#39;window&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="n">chromosome</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">bin_window</span><span class="p">)]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">mutation_load_data_bin</span><span class="p">)</span>
+                <span class="n">mutation_load_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">mutation_load_data</span><span class="p">,</span><span class="n">mutation_load_data_bin</span><span class="p">])</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">end</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">count_in_window</span> <span class="o">=</span> <span class="n">_compute_count_in_region</span><span class="p">(</span><span class="n">sample_data</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span>
+            <span class="n">mutation_load_data_region</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+            <span class="n">mutation_load_data_region</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_in_window</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span>
+            <span class="n">mutation_load_data_region</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">count_in_window</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">]</span>
+            <span class="n">missing_sample_in_window</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">((</span><span class="nb">set</span><span class="p">(</span><span class="n">mutation_load_data_region</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">])))</span>
+            <span class="n">tmp_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;samples&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">missing_sample_in_window</span><span class="p">),</span>
+                                     <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_sample_in_window</span><span class="p">)})</span>
+            <span class="n">mutation_load_data_region</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">mutation_load_data_region</span><span class="p">,</span> <span class="n">tmp_data</span><span class="p">])</span>
+            <span class="n">mutation_load_data_region</span><span class="p">[</span><span class="s1">&#39;window&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="n">chromosome</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">mutation_load_data_region</span><span class="p">)</span>
+            <span class="n">mutation_load_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">mutation_load_data</span><span class="p">,</span> <span class="n">mutation_load_data_region</span><span class="p">])</span>
+    
+    <span class="n">mutation_load_pivot</span> <span class="o">=</span> <span class="n">mutation_load_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">&#39;samples&#39;</span><span class="p">,</span> <span class="s1">&#39;window&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="s1">&#39;samples&#39;</span><span class="p">,</span> <span class="s1">&#39;window&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+   
+    <span class="k">if</span> <span class="n">out_file_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mutation_load_pivot</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">out_file_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">mutation_load_pivot</span></div>
+
+
+<span class="k">def</span> <span class="nf">_compute_shingle</span><span class="p">(</span><span class="n">mutation_load</span><span class="p">,</span> <span class="n">list_samples</span><span class="p">,</span> <span class="n">id_sample</span><span class="p">,</span> <span class="n">moment_type</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">unique</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">list_samples</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">mutation_load</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">unique</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">counts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mutation_load</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">unique</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">:],</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">moment_type</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">moment1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">moment_type</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">moment1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">moment_type</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="n">moment1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">skew</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">moment1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">kurt</span><span class="p">())</span>
+    <span class="n">moment1</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">id_sample</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">moment1</span>
+
+
+<div class="viewcode-block" id="compute_shingle"><a class="viewcode-back" href="../../../api/geno4sd.ml_tools.ReVeaL.html#geno4sd.ml_tools.ReVeaL.compute_shingle">[docs]</a><span class="k">def</span> <span class="nf">compute_shingle</span><span class="p">(</span><span class="n">train_samples</span><span class="p">,</span> <span class="n">test_samples</span><span class="p">,</span><span class="n">mutation_load</span><span class="p">,</span> <span class="n">moment_type</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="n">out_file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function compute the shingles, generating the train and test sample</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        rain_samples: </span>
+<span class="sd">            a panda dataframe containing the train ids to use to create the shingle</span>
+<span class="sd">        test_samples: </span>
+<span class="sd">            a panda dataframe containing the test ids to use to create the shingle</span>
+<span class="sd">        mutation_load: </span>
+<span class="sd">            mutation load from which compute the shingle</span>
+<span class="sd">        moment_type: int, optional, default=1, value=[1,4]</span>
+<span class="sd">            the moments of a function are quantitative measures related to the shape of the distribtion. </span>
+<span class="sd">        out_file_name: str </span>
+<span class="sd">            indicating the filename to store the shingle in csv if provided, default=None</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        a panda datagrame containing the shingles</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Parida L, Haferlach C, Rhrissorrakrai K, Utro F, Levovitz C, Kern W, et al. (2019) </span>
+<span class="sd">        Dark-matter matters: Discriminating subtle blood cancers using the darkest DNA. </span>
+<span class="sd">        PLoS Comput Biol 15(8): e1007332. https://doi.org/10.1371/journal.pcbi.1007332</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">shingles</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">samples_in_train</span> <span class="ow">in</span> <span class="n">train_samples</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">id_sample</span> <span class="o">=</span> <span class="s1">&#39;Train_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;_fold_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">key</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">moment1</span> <span class="o">=</span> <span class="n">_compute_shingle</span><span class="p">(</span><span class="n">mutation_load</span><span class="p">,</span> <span class="n">samples_in_train</span><span class="p">,</span> <span class="n">id_sample</span><span class="p">,</span> <span class="n">moment_type</span><span class="p">)</span>
+        <span class="n">shingles</span> <span class="o">=</span> <span class="n">shingles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">moment1</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">samples_in_test</span> <span class="ow">in</span> <span class="n">test_samples</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">id_sample</span> <span class="o">=</span> <span class="s1">&#39;Test_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;_fold_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">key</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">moment1</span> <span class="o">=</span> <span class="n">_compute_shingle</span><span class="p">(</span><span class="n">mutation_load</span><span class="p">,</span> <span class="n">samples_in_test</span><span class="p">,</span> <span class="n">id_sample</span><span class="p">,</span> <span class="n">moment_type</span><span class="p">)</span>
+        <span class="n">shingles</span> <span class="o">=</span> <span class="n">shingles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">moment1</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">out_file_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">shingles</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">out_file_name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">shingles</span></div>
+
+<div class="viewcode-block" id="permute_labels"><a class="viewcode-back" href="../../../api/geno4sd.ml_tools.ReVeaL.html#geno4sd.ml_tools.ReVeaL.permute_labels">[docs]</a><span class="k">def</span> <span class="nf">permute_labels</span><span class="p">(</span><span class="n">label_info</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Permute the sample labels.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        label_info: </span>
+<span class="sd">            dataframe containing the original sample labels per class</span>
+<span class="sd">        seed: int, optional, default=None</span>
+<span class="sd">            It affects the ordering of the labels, which controls the randomness. </span>
+<span class="sd">            Pass an int for reproducible output across multiple function calls.</span>
+<span class="sd">    </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        dataframe with the permuted sample label</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># None is the default</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    
+    <span class="n">tmp_phenotype</span> <span class="o">=</span> <span class="n">label_info</span><span class="p">[</span><span class="s1">&#39;phenotype&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">shuffle</span><span class="p">(</span><span class="n">tmp_phenotype</span><span class="p">)</span>
+    <span class="n">label_info</span><span class="p">[</span><span class="s1">&#39;phenotype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_phenotype</span>
+
+    <span class="k">return</span> <span class="n">label_info</span></div>
+
+<div class="viewcode-block" id="train_test_split"><a class="viewcode-back" href="../../../api/geno4sd.ml_tools.ReVeaL.html#geno4sd.ml_tools.ReVeaL.train_test_split">[docs]</a><span class="k">def</span> <span class="nf">train_test_split</span><span class="p">(</span><span class="n">label_info</span><span class="p">,</span> <span class="n">test_train_sizes</span><span class="p">,</span> <span class="n">num_fold</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">,</span> <span class="n">permuted</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Split data into training and test set.    </span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        label_info: </span>
+<span class="sd">            panda dataframe containing the original sample labels per class</span>
+<span class="sd">        test_train_sizes: </span>
+<span class="sd">            dataframe containing the size of train and test samples for each label</span>
+<span class="sd">        num_fold: int </span>
+<span class="sd">            number of folds for the crossvalidation</span>
+<span class="sd">        sample_size: int</span>
+<span class="sd">            number of sample used to generate a shingle.</span>
+<span class="sd">        permuted: Boolean, optional, default=False</span>
+<span class="sd">            If True labels will be permuted.</span>
+<span class="sd">        seed: int, optional, default=None</span>
+<span class="sd">            It affects the ordering of the labels, which controls the randomness. </span>
+<span class="sd">            Pass an int for reproducible output across multiple function calls.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        train_samples : a panda dataframe containing the training ids</span>
+<span class="sd">        test_samples :  a panda dataframe containing the testing ids</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">train_samples</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">test_samples</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># None is the default</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">fold</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">num_fold</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">permuted</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Permuting labels&#39;</span><span class="p">)</span>
+            <span class="n">label_info</span> <span class="o">=</span> <span class="n">permute_labels</span><span class="p">(</span><span class="n">label_info</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">index_tr</span><span class="p">,</span> <span class="n">row_tr</span> <span class="ow">in</span> <span class="n">test_train_sizes</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">size_train</span> <span class="o">=</span> <span class="n">row_tr</span><span class="p">[</span><span class="s1">&#39;Train&#39;</span><span class="p">]</span>
+            <span class="n">size_test</span> <span class="o">=</span> <span class="n">row_tr</span><span class="p">[</span><span class="s1">&#39;Test&#39;</span><span class="p">]</span>
+            <span class="n">samples</span> <span class="o">=</span> <span class="n">label_info</span><span class="p">[</span><span class="n">label_info</span><span class="p">[</span><span class="s1">&#39;phenotype&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">row_tr</span><span class="p">[</span><span class="s1">&#39;phenotype&#39;</span><span class="p">]][</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size_train</span><span class="p">):</span>
+                <span class="n">selected_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">train_samples</span><span class="p">[(</span><span class="n">fold</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">row_tr</span><span class="p">[</span><span class="s1">&#39;phenotype&#39;</span><span class="p">])]</span> <span class="o">=</span> <span class="n">selected_samples</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size_test</span><span class="p">):</span>
+                <span class="n">selected_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span><span class="n">sample_size</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">test_samples</span><span class="p">[(</span><span class="n">fold</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">row_tr</span><span class="p">[</span><span class="s1">&#39;phenotype&#39;</span><span class="p">])]</span> <span class="o">=</span> <span class="n">selected_samples</span>
+    
+    <span class="k">return</span> <span class="n">train_samples</span><span class="p">,</span> <span class="n">test_samples</span></div>
+
+<div class="viewcode-block" id="compute"><a class="viewcode-back" href="../../../api/geno4sd.ml_tools.ReVeaL.html#geno4sd.ml_tools.ReVeaL.compute">[docs]</a><span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="n">sample_info</span><span class="p">,</span> <span class="n">label_info</span><span class="p">,</span> <span class="n">test_train_sizes</span><span class="p">,</span> <span class="n">regions</span><span class="p">,</span> <span class="n">chromosomes</span><span class="p">,</span> <span class="n">num_fold</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">,</span> <span class="n">out_folder</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>  <span class="n">n_jobs</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span> <span class="n">moment_type</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">permuted</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function compute the mutational load and shingles, storing them in a folder as csv file</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        sample_info: </span>
+<span class="sd">            panda dataframe containing the sample with relative start and stop alteration</span>
+<span class="sd">        label_info: </span>
+<span class="sd">            panda dataframe containing the original sample labels per class</span>
+<span class="sd">        test_train_sizes: </span>
+<span class="sd">            panda dataframe containing per each label the number of train and test sample per fold to be generated</span>
+<span class="sd">        regions: </span>
+<span class="sd">            panda dataframe containing the start and stop of the region of interest</span>
+<span class="sd">        chromosomes: </span>
+<span class="sd">            list containing the desidered chromosomes to compute the shingles</span>
+<span class="sd">        num_fold: int</span>
+<span class="sd">            number of folds for the crossvalidation</span>
+<span class="sd">        sample_size: int</span>
+<span class="sd">            number of element to sample to create the shingle</span>
+<span class="sd">        out_folder: str</span>
+<span class="sd">            name of the folder where the output will be stored, if it doesn&#39;t exist will be automatically created.</span>
+<span class="sd">        window_size: int</span>
+<span class="sd">            relative the the window size, by default the entire region is used. Note if the window size is not multiple of the region size the last window will be the remaining region portion.</span>
+<span class="sd">        n_jobs: int, optional, default=22 </span>
+<span class="sd">            number of jobs for multiprocessing</span>
+<span class="sd">        moment_type: int, optional, default=1, value=[1,4]</span>
+<span class="sd">            the moments of a function are quantitative measures related to the shape of the distribtion.  </span>
+<span class="sd">        permuted: Boolean, optional, default=False</span>
+<span class="sd">                If True labels will be permuted.</span>
+<span class="sd">        seed: int, optional, default=None</span>
+<span class="sd">            It affects the ordering of the labels, which controls the randomness. </span>
+<span class="sd">            Pass an int for reproducible output across multiple function calls.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        a numpy array with the shingle of all chromosomes (note they chromosome order may not be guaranteed)</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Parida L, Haferlach C, Rhrissorrakrai K, Utro F, Levovitz C, Kern W, et al. (2019) </span>
+<span class="sd">        Dark-matter matters: Discriminating subtle blood cancers using the darkest DNA. </span>
+<span class="sd">        PLoS Comput Biol 15(8): e1007332. https://doi.org/10.1371/journal.pcbi.1007332</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_folder</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">out_folder</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">5</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">compute_mutational_load</span><span class="p">)(</span><span class="n">sample_info</span><span class="p">[</span><span class="n">sample_info</span><span class="p">[</span><span class="s1">&#39;chr&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">chr_interest</span><span class="p">],</span> <span class="n">sample_info</span><span class="p">[</span><span class="s1">&#39;samples&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span>
+                                                                  <span class="n">regions</span><span class="p">[</span><span class="n">regions</span><span class="p">[</span><span class="s1">&#39;chr&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">chr_interest</span><span class="p">],</span>
+                                                                   <span class="n">chr_interest</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="n">window_size</span><span class="p">,</span> <span class="n">out_file_name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_folder</span><span class="p">,</span> <span class="s1">&#39;mutation_load&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">chr_interest</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.csv&#39;</span><span class="p">)</span>
+                                                                  <span class="p">)</span> <span class="k">for</span> <span class="n">chr_interest</span> <span class="ow">in</span> <span class="n">sample_info</span><span class="p">[</span><span class="s1">&#39;chr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+
+    <span class="n">train_samples</span><span class="p">,</span> <span class="n">test_samples</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">label_info</span><span class="p">,</span> <span class="n">test_train_sizes</span><span class="p">,</span> <span class="n">num_fold</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">,</span> <span class="n">permuted</span><span class="o">=</span><span class="n">permuted</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">5</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">compute_shingle</span><span class="p">)(</span><span class="n">train_samples</span><span class="p">,</span> <span class="n">test_samples</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_folder</span><span class="p">,</span> <span class="s1">&#39;mutation_load&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">chr_interest</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.csv&#39;</span><span class="p">),</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                                                                    <span class="n">moment_type</span><span class="p">,</span>  <span class="n">out_file_name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_folder</span><span class="p">,</span> <span class="s1">&#39;shingle_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">chr_interest</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.csv&#39;</span><span class="p">)</span>
+                                                                   <span class="p">)</span> <span class="k">for</span> <span class="n">chr_interest</span> <span class="ow">in</span> <span class="n">chromosomes</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">r</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, &#34;IBM Corp..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

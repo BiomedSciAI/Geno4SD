@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geno4sd.ml_tools.rubricoe.rubricoe module &mdash; Geno4SD  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="geno4sd.utils package" href="geno4sd.utils.html" />
+    <link rel="prev" title="geno4sd.ml_tools.rubricoe.lreb module" href="geno4sd.ml_tools.rubricoe.lreb.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Geno4SD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../source/installation.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../source/overview.html">Overview of Geno4SD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reveal.html">ReVeaL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rubricoe.html">RubricOE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source/tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="geno4sd.html">geno4sd</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="geno4sd.ml_tools.html">ML Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="geno4sd.ml_tools.ReVeaL.html">geno4sd.ml_tools.ReVeaL module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="geno4sd.ml_tools.rubricoe.html">geno4sd.ml_tools.rubricoe package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="geno4sd.ml_tools.rubricoe.feature_ranking.html">geno4sd.ml_tools.rubricoe.feature_ranking module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geno4sd.ml_tools.rubricoe.helper_funcs.html">geno4sd.ml_tools.rubricoe.helper_funcs module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geno4sd.ml_tools.rubricoe.lreb.html">geno4sd.ml_tools.rubricoe.lreb module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">geno4sd.ml_tools.rubricoe.rubricoe module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#summary">Summary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="geno4sd.utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Geno4SD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="geno4sd.html">geno4sd package</a> &raquo;</li>
+          <li><a href="geno4sd.ml_tools.html">geno4sd.ml_tools package</a> &raquo;</li>
+          <li><a href="geno4sd.ml_tools.rubricoe.html">geno4sd.ml_tools.rubricoe package</a> &raquo;</li>
+      <li>geno4sd.ml_tools.rubricoe.rubricoe module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/geno4sd.ml_tools.rubricoe.rubricoe.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-geno4sd.ml_tools.rubricoe.rubricoe">
+<span id="geno4sd-ml-tools-rubricoe-rubricoe-module"></span><h1>geno4sd.ml_tools.rubricoe.rubricoe module<a class="headerlink" href="#module-geno4sd.ml_tools.rubricoe.rubricoe" title="Permalink to this headline"></a></h1>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline"></a></h2>
+<p>Functions:</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geno4sd.ml_tools.rubricoe.rubricoe.compute" title="geno4sd.ml_tools.rubricoe.rubricoe.compute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute</span></code></a></p></td>
+<td><p>Function to run the full RubricOE analysis</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geno4sd.ml_tools.rubricoe.rubricoe.compute_curves" title="geno4sd.ml_tools.rubricoe.rubricoe.compute_curves"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_curves</span></code></a></p></td>
+<td><p>Splits data into <em>working</em> and <em>validation</em>, then computes as many score curves as specified in the <cite>iterations</cite> parameter using only <em>validation</em> data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geno4sd.ml_tools.rubricoe.rubricoe.compute_feature_counts" title="geno4sd.ml_tools.rubricoe.rubricoe.compute_feature_counts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_feature_counts</span></code></a></p></td>
+<td><p>Computes the proportion of iterations where a feature was selected as a top feature according to its corresponding curve.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geno4sd.ml_tools.rubricoe.rubricoe.compute_top_features" title="geno4sd.ml_tools.rubricoe.rubricoe.compute_top_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_top_features</span></code></a></p></td>
+<td><p>Filters out top features according to <cite>threshold</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geno4sd.ml_tools.rubricoe.rubricoe.plot_scores" title="geno4sd.ml_tools.rubricoe.rubricoe.plot_scores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_scores</span></code></a></p></td>
+<td><p>Basic function to plot scores of a repeated experiment with confidence bars and mean value.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="geno4sd.ml_tools.rubricoe.rubricoe.compute_curves">
+<span class="sig-name descname"><span class="pre">compute_curves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curve_steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clf_ranking</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clf_scoring</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranking_test_size=0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranking_number_of_folds=5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_ranking_coefs=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoring_test_size=0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoring_number_of_folds=5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_function=&lt;function</span> <span class="pre">youden_index&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoring_n_jobs=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranking_n_jobs=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoring_adaptive_features=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoring_tolerance_steps=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoring_window_size=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details_files=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details_files_parent_path='./'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/geno4sd/ml_tools/rubricoe/rubricoe.html#compute_curves"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#geno4sd.ml_tools.rubricoe.rubricoe.compute_curves" title="Permalink to this definition"></a></dt>
+<dd><p>Splits data into <em>working</em> and <em>validation</em>, then computes as many score curves as specified in the <cite>iterations</cite> parameter using
+only <em>validation</em> data. Each iteration has its own set of random splits for ranking and random splits for scoring. Returns
+a list with ranked features and scores for each iteration, along with indices for samples in <em>working</em> and <em>validation</em> data. If
+<cite>return_ranking_coefs</cite> is <cite>True</cite>, it also returns the average rankings for each feature.</p>
+<dl class="simple">
+<dt>X:</dt><dd><p>2D array with rows observations and columns variables.</p>
+</dd>
+<dt>y:</dt><dd><p>1D array with integer labels (0 or 1) for each row of X.</p>
+</dd>
+<dt>iterations:</dt><dd><p>Number of repetitions for the inner RubricOE loop.</p>
+</dd>
+<dt>validation_size:</dt><dd><p>Proportion of observations that will be held out during the entire procedure for validation.</p>
+</dd>
+<dt>clf_ranking:</dt><dd><p>Function that will be used for ranking features in the inner loop. An example is lreb.LinRidgeRegSVD().
+Generally a function with a <cite>.fit(data,labels)</cite> method with a <cite>coef_</cite> attribute will work.</p>
+</dd>
+<dt>clf_scoring:</dt><dd><p>Function that will be used for training and testing computations in the inner loop on subsets of features.
+An example is sklearn’s SVC(). Generally a function with <cite>.fit(train_data,labels)</cite> and <cite>.predict(test_data)</cite>
+methods will work.</p>
+</dd>
+<dt>n_features:</dt><dd><p>If specified, upper bound of ranked features used to generate score curves. Note: All features are still used for feature ranking,
+only score curves are affected.</p>
+</dd>
+<dt>ranking_test_size:</dt><dd><p>Proportion of observations in working data that will be randomly discarded in each fold when training the ranking procedure.</p>
+</dd>
+<dt>ranking_number_of_folds:</dt><dd><p>Number of repetitions of training the ranking procedure.</p>
+</dd>
+<dt>return_ranking_coefs:</dt><dd><p>Flag to specify if should return actual rankings of features.</p>
+</dd>
+<dt>scoring_test_size:</dt><dd><p>Proportion of observations in working data that will be used in each fold for testing performance of <cite>clf_scoring</cite>.</p>
+</dd>
+<dt>scoring_number_of_folds:</dt><dd><p>Number of repetitions of training the ranking procedure.</p>
+</dd>
+<dt>score_function:</dt><dd><p>Function that will be used to generate values in the score curve. By default it uses the Youden Index, but more generally
+a function of the form score(true,pred) will work</p>
+</dd>
+<dt>score_n_jobs:</dt><dd><p>Number of jobs that will be spawned to compute curve points in parallel.</p>
+</dd>
+<dt>verbose:</dt><dd><p>Verbosity level. 0 disables all messages. Greater than 0 prints messages.</p>
+</dd>
+</dl>
+<blockquote>
+<div><p>ranked_features_list, curve_list, idx_working, idx_validation
+A tuple with, in order:
+* a list with lists of ranked feature indices from higher to lower importance (one per iteration),
+* a list with lists of scores obtained by the classifier when increasing the number of features selected (one per iteration),
+* an array with the indices of the observations corresponding to the working set
+* an array with the indices of the observations corresponding to the validation set</p>
+<p>If the flag <cite>return_ranking_coefs</cite> is set to <cite>True</cite>, the return tuple is</p>
+<p>ranked_features_list, ranking_coefs, curve_list, idx_working, idx_validation
+With, in order:
+* a list with lists of ranked feature indices from higher to lower importance (one per iteration),
+* a list with lists of rankings of the features from higher to lower importance (one per iteration),
+* a list with lists of scores obtained by the classifier when increasing the number of features selected (one per iteration),
+* an array with the indices of the observations corresponding to the working set
+* an array with the indices of the observations corresponding to the validation set</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geno4sd.ml_tools.rubricoe.rubricoe.compute_feature_counts">
+<span class="sig-name descname"><span class="pre">compute_feature_counts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ranked_features_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curve_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/geno4sd/ml_tools/rubricoe/rubricoe.html#compute_feature_counts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#geno4sd.ml_tools.rubricoe.rubricoe.compute_feature_counts" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the proportion of iterations where a feature was selected as a top feature according to its corresponding curve.
+Expects parameters similar to the output of <cite>compute_curves</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geno4sd.ml_tools.rubricoe.rubricoe.compute_top_features">
+<span class="sig-name descname"><span class="pre">compute_top_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_counts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/geno4sd/ml_tools/rubricoe/rubricoe.html#compute_top_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#geno4sd.ml_tools.rubricoe.rubricoe.compute_top_features" title="Permalink to this definition"></a></dt>
+<dd><p>Filters out top features according to <cite>threshold</cite>. A <cite>threshold</cite> value of 1 indicates that the feature was selected as
+a top feature in all iterations. Expects <cite>feature_counts</cite> to be similar to the output of <cite>compute_feature_counts</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geno4sd.ml_tools.rubricoe.rubricoe.plot_scores">
+<span class="sig-name descname"><span class="pre">plot_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eval_scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/geno4sd/ml_tools/rubricoe/rubricoe.html#plot_scores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#geno4sd.ml_tools.rubricoe.rubricoe.plot_scores" title="Permalink to this definition"></a></dt>
+<dd><p>Basic function to plot scores of a repeated experiment with confidence bars and mean value.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geno4sd.ml_tools.rubricoe.rubricoe.compute">
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">curve_steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranking_test_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoring_test_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranking_number_of_folds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoring_number_of_folds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scoring_n_jobs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details_files_parent_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'./'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/geno4sd/ml_tools/rubricoe/rubricoe.html#compute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#geno4sd.ml_tools.rubricoe.rubricoe.compute" title="Permalink to this definition"></a></dt>
+<dd><p>Function to run the full RubricOE analysis</p>
+<dl class="simple">
+<dt>df:</dt><dd><p>Dataframe of input matrix with column ‘phenotype’ with label</p>
+</dd>
+<dt>iterations: int</dt><dd><p>Number of iterations of main RubricOE loop</p>
+</dd>
+<dt>curve_steps: int</dt><dd><p>Scoring curve resolution</p>
+</dd>
+<dt>validation_size: float</dt><dd><p>Proportion of data to use for validation</p>
+</dd>
+<dt>n_features: int</dt><dd><p>Number of features to use for score curve. Set to “all” for all features.</p>
+</dd>
+<dt>ranking_test_size: float</dt><dd><p>Proportion of non-validation data to use per split on ranking step.</p>
+</dd>
+<dt>scoring_test_size: float</dt><dd><p>Proportion of non-validation data to use per split on scoring step.</p>
+</dd>
+<dt>ranking_number_of_folds:</dt><dd><p>Number of splits used in ranking step.</p>
+</dd>
+<dt>scoring_number_of_folds: int</dt><dd><p>Number of splits used in scoring step</p>
+</dd>
+<dt>C: float</dt><dd><p>Regularization coefficient in Ridge Regression with Error Bars</p>
+</dd>
+<dt>scoring_n_jobs: int</dt><dd><p>Number of parallel processes to run in scoring step</p>
+</dd>
+<dt>threshold: float</dt><dd><p>Proportion of iterations where a SNP should be present to be interpreted as a top SNP.</p>
+</dd>
+<dt>output_filename: str,</dt><dd><p>Base name of output files.</p>
+</dd>
+<dt>details: Boolean, default=True,</dt><dd><p>Whether to output files with detailed intermediate results.</p>
+</dd>
+<dt>details_files_path: str, optional</dt><dd><p>Path where output files will be written to. Not optional if <cite>details_files</cite> is <cite>True</cite>.</p>
+</dd>
+<dt>verbose: int, default=0,</dt><dd><p>Set to 0 to omit progress notifications.</p>
+</dd>
+</dl>
+<p>A the subset input dataframe, relative to the top features</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="geno4sd.ml_tools.rubricoe.lreb.html" class="btn btn-neutral float-left" title="geno4sd.ml_tools.rubricoe.lreb module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="geno4sd.utils.html" class="btn btn-neutral float-right" title="geno4sd.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, &#34;IBM Corp..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

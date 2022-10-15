@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geno4sd.utils.snpeff_tools &mdash; Geno4SD  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Geno4SD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/installation.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/overview.html">Overview of Geno4SD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reveal.html">ReVeaL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rubricoe.html">RubricOE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.html">geno4sd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.ml_tools.html">ML Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Geno4SD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>geno4sd.utils.snpeff_tools</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for geno4sd.utils.snpeff_tools</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Basic parameters for the java command</span>
+<span class="n">mem_size</span> <span class="o">=</span> <span class="s1">&#39;16g&#39;</span>
+<span class="n">rootdir</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span> <span class="s1">&#39;Geno4SD/.*&#39;</span><span class="p">,</span> <span class="s1">&#39;Geno4SD&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+<span class="n">java_cmd</span> <span class="o">=</span> <span class="s1">&#39;java -Xmx&#39;</span><span class="o">+</span><span class="n">mem_size</span> <span class="o">+</span> <span class="s1">&#39; -jar &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">rootdir</span><span class="p">,</span> <span class="s1">&#39;geno4sd&#39;</span><span class="p">,</span> <span class="s1">&#39;utils&#39;</span><span class="p">,</span> <span class="s1">&#39;snpEff&#39;</span><span class="p">,</span> <span class="s1">&#39;snpEff.jar&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="download_genome"><a class="viewcode-back" href="../../../api/geno4sd.utils.snpeff_tools.html#geno4sd.utils.snpeff_tools.download_genome">[docs]</a><span class="k">def</span> <span class="nf">download_genome</span><span class="p">(</span><span class="n">genome</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to download genome</span>
+<span class="sd">    </span>
+<span class="sd">    :params genome: name of genome to download</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span> <span class="n">java_cmd</span> <span class="o">+</span> <span class="s1">&#39; download -v &#39;</span> <span class="o">+</span> <span class="n">genome</span> <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="cancer_analysis"><a class="viewcode-back" href="../../../api/geno4sd.utils.snpeff_tools.html#geno4sd.utils.snpeff_tools.cancer_analysis">[docs]</a><span class="k">def</span> <span class="nf">cancer_analysis</span><span class="p">(</span><span class="n">inputvcf</span><span class="p">,</span> <span class="n">outputvcf</span><span class="p">,</span> <span class="n">genome</span> <span class="o">=</span> <span class="s1">&#39;GRCh38.p13&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to run SnpEff cancer analysis annotation mode</span>
+<span class="sd">    </span>
+<span class="sd">    :params inputvcf: &lt;string&gt; path to input vcf</span>
+<span class="sd">    :params outputvcf: &lt;string&gt; path to output vcf</span>
+<span class="sd">    :params genome: &lt;string&gt; Genome version to use. Be sure of have already downloaded it. Default is &quot;GRCh38.p13&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span> <span class="n">java_cmd</span> <span class="o">+</span> <span class="s1">&#39; -v -cancer &#39;</span> <span class="o">+</span> <span class="n">genome</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">inputvcf</span> <span class="o">+</span> <span class="s1">&#39; &gt; &#39;</span> <span class="o">+</span> <span class="n">outputvcf</span> <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="parse_vcf"><a class="viewcode-back" href="../../../api/geno4sd.utils.snpeff_tools.html#geno4sd.utils.snpeff_tools.parse_vcf">[docs]</a><span class="k">def</span> <span class="nf">parse_vcf</span><span class="p">(</span><span class="n">inputvcf</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to parse vcf into panda dataframe</span>
+<span class="sd">    </span>
+<span class="sd">    :params inputvcf: &lt;string&gt; path to input vcf</span>
+<span class="sd">    :return: &lt;dataframe&gt; parsed object</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">header_index</span> <span class="o">=</span> <span class="mi">0</span>    
+    <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">inputvcf</span><span class="p">):</span>
+        <span class="n">l</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;#CHROM&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">header_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">header_index</span> <span class="o">=</span> <span class="n">l</span>             
+        <span class="k">if</span> <span class="p">(</span><span class="n">header_index</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">))</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">lines</span> <span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,:]</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;INFO&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;INFO&#39;</span><span class="p">]</span> <span class="p">]</span>
+    
+    <span class="k">return</span><span class="p">(</span> <span class="n">df</span> <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, &#34;IBM Corp..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

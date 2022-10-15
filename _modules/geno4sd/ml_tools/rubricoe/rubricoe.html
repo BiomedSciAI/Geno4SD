@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geno4sd.ml_tools.rubricoe.rubricoe &mdash; Geno4SD  documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> Geno4SD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../source/installation.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../source/overview.html">Overview of Geno4SD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reveal.html">ReVeaL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rubricoe.html">RubricOE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../source/tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/geno4sd.html">geno4sd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/geno4sd.ml_tools.html">ML Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/geno4sd.utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Geno4SD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      <li>geno4sd.ml_tools.rubricoe.rubricoe</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for geno4sd.ml_tools.rubricoe.rubricoe</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">feature_ranking</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">lreb</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">import</span> <span class="nn">numpy</span><span class="o">,</span><span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">.helper_funcs</span> <span class="kn">import</span> <span class="n">save_to_pickle</span><span class="p">,</span> <span class="n">save_to_csv</span>
+
+<div class="viewcode-block" id="compute_curves"><a class="viewcode-back" href="../../../../api/geno4sd.ml_tools.rubricoe.rubricoe.html#geno4sd.ml_tools.rubricoe.rubricoe.compute_curves">[docs]</a><span class="k">def</span> <span class="nf">compute_curves</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> 
+                    <span class="n">iterations</span><span class="p">,</span> 
+                    <span class="n">curve_steps</span><span class="p">,</span>
+                    <span class="n">validation_size</span><span class="p">,</span>
+                    <span class="n">clf_ranking</span><span class="p">,</span> 
+                    <span class="n">clf_scoring</span><span class="p">,</span>
+                    <span class="n">n_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">ranking_test_size</span> <span class="o">=</span> <span class="mf">.2</span><span class="p">,</span>
+                    <span class="n">ranking_number_of_folds</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="n">return_ranking_coefs</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="n">scoring_test_size</span> <span class="o">=</span> <span class="mf">.2</span><span class="p">,</span>
+                    <span class="n">scoring_number_of_folds</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="n">score_function</span> <span class="o">=</span> <span class="n">feature_ranking</span><span class="o">.</span><span class="n">youden_index</span><span class="p">,</span>
+                    <span class="n">scoring_n_jobs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">ranking_n_jobs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="n">scoring_adaptive_features</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="n">scoring_tolerance_steps</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                    <span class="n">scoring_window_size</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                    <span class="n">verbose</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="n">details_files</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="n">details_files_parent_path</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span><span class="p">,</span>
+                    <span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Splits data into *working* and *validation*, then computes as many score curves as specified in the `iterations` parameter using</span>
+<span class="sd">    only *validation* data. Each iteration has its own set of random splits for ranking and random splits for scoring. Returns</span>
+<span class="sd">    a list with ranked features and scores for each iteration, along with indices for samples in *working* and *validation* data. If </span>
+<span class="sd">    `return_ranking_coefs` is `True`, it also returns the average rankings for each feature.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+
+<span class="sd">    X:</span>
+<span class="sd">        2D array with rows observations and columns variables.</span>
+<span class="sd">    </span>
+<span class="sd">    y:</span>
+<span class="sd">        1D array with integer labels (0 or 1) for each row of X.</span>
+<span class="sd">    </span>
+<span class="sd">    iterations:</span>
+<span class="sd">        Number of repetitions for the inner RubricOE loop.</span>
+
+<span class="sd">    validation_size:</span>
+<span class="sd">        Proportion of observations that will be held out during the entire procedure for validation.</span>
+
+<span class="sd">    clf_ranking:</span>
+<span class="sd">        Function that will be used for ranking features in the inner loop. An example is lreb.LinRidgeRegSVD().</span>
+<span class="sd">        Generally a function with a `.fit(data,labels)` method with a `coef_` attribute will work.</span>
+<span class="sd">    </span>
+<span class="sd">    clf_scoring:</span>
+<span class="sd">        Function that will be used for training and testing computations in the inner loop on subsets of features. </span>
+<span class="sd">        An example is sklearn&#39;s SVC(). Generally a function with `.fit(train_data,labels)` and `.predict(test_data)` </span>
+<span class="sd">        methods will work.</span>
+<span class="sd">    </span>
+<span class="sd">    n_features:</span>
+<span class="sd">        If specified, upper bound of ranked features used to generate score curves. Note: All features are still used for feature ranking,</span>
+<span class="sd">        only score curves are affected.</span>
+<span class="sd">        </span>
+<span class="sd">    ranking_test_size:</span>
+<span class="sd">        Proportion of observations in working data that will be randomly discarded in each fold when training the ranking procedure.</span>
+<span class="sd">    </span>
+<span class="sd">    ranking_number_of_folds:</span>
+<span class="sd">        Number of repetitions of training the ranking procedure.</span>
+
+<span class="sd">    return_ranking_coefs:</span>
+<span class="sd">        Flag to specify if should return actual rankings of features.</span>
+
+<span class="sd">    scoring_test_size:</span>
+<span class="sd">        Proportion of observations in working data that will be used in each fold for testing performance of `clf_scoring`.</span>
+<span class="sd">    </span>
+<span class="sd">    scoring_number_of_folds:</span>
+<span class="sd">        Number of repetitions of training the ranking procedure.</span>
+<span class="sd">    </span>
+<span class="sd">    score_function:</span>
+<span class="sd">        Function that will be used to generate values in the score curve. By default it uses the Youden Index, but more generally</span>
+<span class="sd">        a function of the form score(true,pred) will work</span>
+<span class="sd">    </span>
+<span class="sd">    score_n_jobs:</span>
+<span class="sd">        Number of jobs that will be spawned to compute curve points in parallel.</span>
+
+<span class="sd">    verbose:</span>
+<span class="sd">        Verbosity level. 0 disables all messages. Greater than 0 prints messages.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">        ranked_features_list, curve_list, idx_working, idx_validation</span>
+<span class="sd">        A tuple with, in order: </span>
+<span class="sd">        * a list with lists of ranked feature indices from higher to lower importance (one per iteration),</span>
+<span class="sd">        * a list with lists of scores obtained by the classifier when increasing the number of features selected (one per iteration),</span>
+<span class="sd">        * an array with the indices of the observations corresponding to the working set</span>
+<span class="sd">        * an array with the indices of the observations corresponding to the validation set</span>
+
+<span class="sd">        If the flag `return_ranking_coefs` is set to `True`, the return tuple is</span>
+
+<span class="sd">        ranked_features_list, ranking_coefs, curve_list, idx_working, idx_validation</span>
+<span class="sd">        With, in order: </span>
+<span class="sd">        * a list with lists of ranked feature indices from higher to lower importance (one per iteration),</span>
+<span class="sd">        * a list with lists of rankings of the features from higher to lower importance (one per iteration),</span>
+<span class="sd">        * a list with lists of scores obtained by the classifier when increasing the number of features selected (one per iteration),</span>
+<span class="sd">        * an array with the indices of the observations corresponding to the working set</span>
+<span class="sd">        * an array with the indices of the observations corresponding to the validation set</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">unique_id</span> <span class="o">=</span> <span class="s2">&quot;RUBRICOE_&quot;</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>  <span class="o">+</span> \
+             <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">SystemRandom</span><span class="p">()</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span> 
+    <span class="k">if</span> <span class="n">details_files</span><span class="p">:</span>
+        <span class="n">details_files_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">details_files_parent_path</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">details_files_path</span><span class="p">)</span>
+    <span class="n">idx_working</span><span class="p">,</span> <span class="n">idx_validation</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">test_size</span><span class="o">=</span><span class="n">validation_size</span><span class="p">,</span><span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">details_files</span><span class="p">:</span>
+        <span class="n">save_to_csv</span><span class="p">(</span><span class="n">idx_working</span><span class="p">,</span> <span class="n">details_files_path</span><span class="p">,</span> <span class="s2">&quot;indices_working.csv&quot;</span><span class="p">)</span>
+        <span class="n">save_to_csv</span><span class="p">(</span><span class="n">idx_validation</span><span class="p">,</span> <span class="n">details_files_path</span><span class="p">,</span> <span class="s2">&quot;indices_validation.csv&quot;</span><span class="p">)</span>
+    <span class="n">X_working</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">idx_working</span><span class="p">]</span>
+    <span class="n">y_working</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">idx_working</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">return_ranking_coefs</span><span class="p">:</span>
+        <span class="n">ranking_coefs_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ranked_features_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">curve_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">random_generator</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">random_generator</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">iteration_scoring_seeds</span> <span class="o">=</span> <span class="n">random_generator</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">iterations</span><span class="p">)</span>
+    <span class="n">iteration_ranking_seeds</span> <span class="o">=</span> <span class="n">random_generator</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mi">32</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">iterations</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">details_files</span><span class="p">:</span>
+            <span class="n">details_files_iteration_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">details_files_path</span><span class="p">,</span><span class="s2">&quot;ITERATION</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">details_files_iteration_path</span><span class="p">)</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iteration </span><span class="si">{}</span><span class="s2"> of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">iterations</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">n_features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">step_size</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">n_features</span><span class="o">//</span><span class="n">step_size</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">curve_steps</span><span class="p">:</span>
+            <span class="n">step_size</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">ranked_features</span> <span class="o">=</span> <span class="n">feature_ranking</span><span class="o">.</span><span class="n">rank_features</span><span class="p">(</span><span class="n">clf_ranking</span><span class="p">,</span> 
+                                                        <span class="n">X_working</span><span class="p">,</span> 
+                                                        <span class="n">y_working</span><span class="p">,</span> 
+                                                        <span class="n">test_size</span><span class="o">=</span><span class="n">ranking_test_size</span><span class="p">,</span> 
+                                                        <span class="n">number_of_folds</span><span class="o">=</span><span class="n">ranking_number_of_folds</span><span class="p">,</span>
+                                                        <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                                                        <span class="n">return_ranking_coefs</span><span class="o">=</span><span class="n">return_ranking_coefs</span><span class="p">,</span>
+                                                        <span class="n">n_jobs</span> <span class="o">=</span> <span class="n">ranking_n_jobs</span><span class="p">,</span>
+                                                        <span class="n">details_files</span><span class="o">=</span><span class="n">details_files</span><span class="p">,</span>
+                                                        <span class="n">details_files_path</span><span class="o">=</span><span class="n">details_files_iteration_path</span><span class="p">,</span>
+                                                        <span class="n">seed</span><span class="o">=</span><span class="n">iteration_scoring_seeds</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">return_ranking_coefs</span><span class="p">:</span>
+            <span class="n">ranked_features</span><span class="p">,</span> <span class="n">ranking_coefs</span> <span class="o">=</span> <span class="n">ranked_features</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">clf_ranking</span><span class="p">,</span><span class="n">lreb</span><span class="o">.</span><span class="n">LinRidgeRegSVD</span><span class="p">):</span>  <span class="c1"># WORKAROUND FOR CURRENT IMPLEMENTATION OF LREB</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Applying workaround for Linear Regression with Error Bars.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">return_ranking_coefs</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ranked_features</span><span class="p">,</span><span class="n">ranking_coefs</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">&lt;</span><span class="n">X_working</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+                <span class="n">ranked_features</span><span class="p">,</span> <span class="n">ranking_coefs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">temp</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ranked_features</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ranked_features</span> <span class="k">if</span> <span class="n">x</span><span class="o">&lt;</span><span class="n">X_working</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">ranked_features_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ranked_features</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_ranking_coefs</span><span class="p">:</span>
+            <span class="n">ranking_coefs_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ranking_coefs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature ranking completed. </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_time</span><span class="si">}</span><span class="s2"> seconds.&quot;</span><span class="p">)</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">curve</span> <span class="o">=</span> <span class="n">feature_ranking</span><span class="o">.</span><span class="n">score_curve</span><span class="p">(</span><span class="n">clf_scoring</span><span class="p">,</span>
+                                            <span class="n">X_working</span><span class="p">[:,</span><span class="n">ranked_features</span><span class="p">[:</span><span class="n">n_features</span><span class="p">]],</span>
+                                            <span class="n">y_working</span><span class="p">,</span>
+                                            <span class="n">test_size</span><span class="o">=</span><span class="n">scoring_test_size</span><span class="p">,</span>
+                                            <span class="n">number_of_folds</span><span class="o">=</span><span class="n">scoring_number_of_folds</span><span class="p">,</span>
+                                            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                                            <span class="n">n_jobs</span><span class="o">=</span><span class="n">scoring_n_jobs</span><span class="p">,</span>
+                                            <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">,</span>
+                                            <span class="n">n_features</span><span class="o">=</span><span class="n">n_features</span><span class="p">,</span>
+                                            <span class="n">score_function</span><span class="o">=</span><span class="n">score_function</span><span class="p">,</span>
+                                            <span class="n">adaptive_features</span><span class="o">=</span><span class="n">scoring_adaptive_features</span><span class="p">,</span>
+                                            <span class="n">tolerance_steps</span> <span class="o">=</span> <span class="n">scoring_tolerance_steps</span><span class="p">,</span>
+                                            <span class="n">window_size</span> <span class="o">=</span> <span class="n">scoring_window_size</span><span class="p">,</span>
+                                            <span class="n">details_files</span><span class="o">=</span><span class="n">details_files</span><span class="p">,</span>
+                                            <span class="n">details_files_path</span><span class="o">=</span><span class="n">details_files_iteration_path</span><span class="p">,</span>
+                                            <span class="n">seed</span><span class="o">=</span><span class="n">iteration_ranking_seeds</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Curve scoring completed. </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_time</span><span class="si">}</span><span class="s2"> seconds.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">details_files</span><span class="p">:</span>
+            <span class="n">save_to_csv</span><span class="p">(</span><span class="n">ranked_features</span><span class="p">,</span><span class="n">details_files_iteration_path</span><span class="p">,</span><span class="s2">&quot;ranked_features.csv&quot;</span><span class="p">)</span>    
+            <span class="n">save_to_csv</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span><span class="n">details_files_iteration_path</span><span class="p">,</span><span class="s2">&quot;curve.csv&quot;</span><span class="p">)</span>
+        <span class="n">curve_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curve</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">return_ranking_coefs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ranked_features_list</span><span class="p">,</span> <span class="n">ranking_coefs_list</span><span class="p">,</span> <span class="n">curve_list</span><span class="p">,</span> <span class="n">idx_working</span><span class="p">,</span> <span class="n">idx_validation</span>
+    <span class="k">return</span> <span class="n">ranked_features_list</span><span class="p">,</span> <span class="n">curve_list</span><span class="p">,</span> <span class="n">idx_working</span><span class="p">,</span> <span class="n">idx_validation</span></div>
+
+
+<div class="viewcode-block" id="compute_feature_counts"><a class="viewcode-back" href="../../../../api/geno4sd.ml_tools.rubricoe.rubricoe.html#geno4sd.ml_tools.rubricoe.rubricoe.compute_feature_counts">[docs]</a><span class="k">def</span> <span class="nf">compute_feature_counts</span><span class="p">(</span><span class="n">ranked_features_list</span><span class="p">,</span> <span class="n">curve_list</span><span class="p">,</span> <span class="n">step_size</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the proportion of iterations where a feature was selected as a top feature according to its corresponding curve.</span>
+<span class="sd">    Expects parameters similar to the output of `compute_curves`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ranked_features_list</span><span class="p">)</span><span class="o">!=</span><span class="nb">len</span><span class="p">(</span><span class="n">curve_list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Number of iterations in rankings and curves don&#39;t match.&quot;</span><span class="p">)</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ranked_features_list</span><span class="p">)</span>
+    <span class="n">top_features_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">curve_list</span><span class="p">):</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">c</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">step_size</span>
+        <span class="n">top_features_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ranked_features_list</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="n">threshold</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ranked_features_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">top_features_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+                <span class="n">counts</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">feature_counts</span> <span class="o">=</span> <span class="n">counts</span><span class="o">/</span><span class="n">scale</span>
+    <span class="k">return</span> <span class="n">feature_counts</span></div>
+
+<div class="viewcode-block" id="compute_top_features"><a class="viewcode-back" href="../../../../api/geno4sd.ml_tools.rubricoe.rubricoe.html#geno4sd.ml_tools.rubricoe.rubricoe.compute_top_features">[docs]</a><span class="k">def</span> <span class="nf">compute_top_features</span><span class="p">(</span><span class="n">feature_counts</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1.</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">    Filters out top features according to `threshold`. A `threshold` value of 1 indicates that the feature was selected as </span>
+<span class="sd">    a top feature in all iterations. Expects `feature_counts` to be similar to the output of `compute_feature_counts`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">feature_counts</span><span class="o">&gt;=</span><span class="n">threshold</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="plot_scores"><a class="viewcode-back" href="../../../../api/geno4sd.ml_tools.rubricoe.rubricoe.html#geno4sd.ml_tools.rubricoe.rubricoe.plot_scores">[docs]</a><span class="k">def</span> <span class="nf">plot_scores</span><span class="p">(</span><span class="n">eval_scores</span><span class="p">,</span> <span class="n">extra_string</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Basic function to plot scores of a repeated experiment with confidence bars and mean value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">cil</span><span class="p">,</span><span class="n">cir</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">eval_scores</span><span class="p">,[</span><span class="mf">2.5</span><span class="p">,</span><span class="mf">97.5</span><span class="p">])</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">eval_scores</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Density Estimate&quot;</span><span class="p">,</span><span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">xc</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">xg</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">eval_scores</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Score frequency plot</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">extra_string</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">xc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Score = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xc</span><span class="p">),</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">cil</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;CI Left = </span><span class="si">{:0.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cil</span><span class="p">),</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">cir</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;CI Right = </span><span class="si">{:0.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cir</span><span class="p">),</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">xg</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Mean = </span><span class="si">{:0.3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xg</span><span class="p">),</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Score&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="compute"><a class="viewcode-back" href="../../../../api/geno4sd.ml_tools.rubricoe.rubricoe.html#geno4sd.ml_tools.rubricoe.rubricoe.compute">[docs]</a><span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> 
+                        <span class="n">iterations</span><span class="p">,</span> 
+                        <span class="n">curve_steps</span><span class="p">,</span> 
+                        <span class="n">validation_size</span><span class="p">,</span>
+                        <span class="n">n_features</span><span class="p">,</span> 
+                        <span class="n">ranking_test_size</span><span class="p">,</span>
+                        <span class="n">scoring_test_size</span><span class="p">,</span>
+                        <span class="n">ranking_number_of_folds</span><span class="p">,</span> 
+                        <span class="n">scoring_number_of_folds</span><span class="p">,</span>
+                        <span class="n">C</span><span class="p">,</span>
+                        <span class="n">scoring_n_jobs</span><span class="p">,</span>
+                        <span class="n">threshold</span><span class="p">,</span>
+                        <span class="n">output_filename</span><span class="p">,</span>
+                        <span class="n">details</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">details_files_parent_path</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span><span class="p">,</span>
+                        <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to run the full RubricOE analysis</span>
+<span class="sd">    </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">       </span>
+<span class="sd">        df: </span>
+<span class="sd">            Dataframe of input matrix with column &#39;phenotype&#39; with label</span>
+<span class="sd">        iterations: int</span>
+<span class="sd">            Number of iterations of main RubricOE loop</span>
+<span class="sd">        curve_steps: int</span>
+<span class="sd">            Scoring curve resolution</span>
+<span class="sd">        validation_size: float</span>
+<span class="sd">            Proportion of data to use for validation</span>
+<span class="sd">        n_features: int</span>
+<span class="sd">            Number of features to use for score curve. Set to \&quot;all\&quot; for all features.</span>
+<span class="sd">        ranking_test_size: float</span>
+<span class="sd">            Proportion of non-validation data to use per split on ranking step.</span>
+<span class="sd">        scoring_test_size: float</span>
+<span class="sd">            Proportion of non-validation data to use per split on scoring step.</span>
+<span class="sd">        ranking_number_of_folds: </span>
+<span class="sd">            Number of splits used in ranking step.</span>
+<span class="sd">        scoring_number_of_folds: int</span>
+<span class="sd">            Number of splits used in scoring step</span>
+<span class="sd">        C: float</span>
+<span class="sd">            Regularization coefficient in Ridge Regression with Error Bars</span>
+<span class="sd">        scoring_n_jobs: int</span>
+<span class="sd">            Number of parallel processes to run in scoring step</span>
+<span class="sd">        threshold: float</span>
+<span class="sd">            Proportion of iterations where a SNP should be present to be interpreted as a top SNP.</span>
+<span class="sd">        output_filename: str,</span>
+<span class="sd">            Base name of output files.</span>
+<span class="sd">        details: Boolean, default=True,</span>
+<span class="sd">            Whether to output files with detailed intermediate results.</span>
+<span class="sd">        details_files_path: str, optional</span>
+<span class="sd">            Path where output files will be written to. Not optional if `details_files` is `True`.</span>
+<span class="sd">        verbose: int, default=0, </span>
+<span class="sd">            Set to 0 to omit progress notifications.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        A the subset input dataframe, relative to the top features</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span><span class="o">!=</span><span class="s2">&quot;phenotype&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;phenotype&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="k">if</span> <span class="n">n_features</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+        <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">n_features</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_features</span><span class="p">)</span>
+    <span class="n">step_size</span> <span class="o">=</span> <span class="n">n_features</span><span class="o">//</span><span class="n">curve_steps</span>
+    <span class="n">ranked_features</span><span class="p">,</span> <span class="n">curves</span><span class="p">,</span> <span class="n">idx_working</span><span class="p">,</span> <span class="n">idx_validation</span> <span class="o">=</span> <span class="n">ompute_curves</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+                                                                <span class="n">iterations</span> <span class="o">=</span> <span class="n">iterations</span><span class="p">,</span> 
+                                                                <span class="n">curve_steps</span> <span class="o">=</span> <span class="n">curve_steps</span><span class="p">,</span>
+                                                                <span class="n">validation_size</span> <span class="o">=</span> <span class="n">validation_size</span><span class="p">,</span>
+                                                                <span class="n">n_features</span> <span class="o">=</span> <span class="n">n_features</span><span class="p">,</span>
+                                                                <span class="n">ranking_test_size</span> <span class="o">=</span> <span class="n">ranking_test_size</span><span class="p">,</span>
+                                                                <span class="n">scoring_test_size</span> <span class="o">=</span> <span class="n">scoring_test_size</span><span class="p">,</span>
+                                                                <span class="n">ranking_number_of_folds</span> <span class="o">=</span> <span class="n">ranking_number_of_folds</span><span class="p">,</span>
+                                                                <span class="n">scoring_number_of_folds</span> <span class="o">=</span> <span class="n">scoring_number_of_folds</span><span class="p">,</span>
+                                                                <span class="n">clf_ranking</span> <span class="o">=</span> <span class="n">rubricoe</span><span class="o">.</span><span class="n">lreb</span><span class="o">.</span><span class="n">LinRidgeRegSVD</span><span class="p">(</span><span class="n">C</span> <span class="o">=</span> <span class="n">C</span><span class="p">),</span>
+                                                                <span class="n">clf_scoring</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">),</span>
+                                                                <span class="n">scoring_n_jobs</span> <span class="o">=</span> <span class="n">scoring_n_jobs</span><span class="p">,</span>
+                                                                <span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span><span class="p">,</span>
+                                                                <span class="n">details_files</span><span class="o">=</span><span class="n">details</span><span class="p">,</span>
+                                                                <span class="n">details_files_parent_path</span> <span class="o">=</span> <span class="n">details_files_parent_path</span><span class="p">)</span>
+    <span class="n">feature_counts</span> <span class="o">=</span> <span class="n">compute_feature_counts</span><span class="p">(</span><span class="n">ranked_features</span><span class="p">,</span><span class="n">curves</span><span class="p">,</span><span class="n">step_size</span><span class="p">)</span>
+    <span class="n">top_features</span> <span class="o">=</span> <span class="n">compute_top_features</span><span class="p">(</span><span class="n">feature_counts</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finished computing. Saving files...&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">details</span><span class="p">:</span>
+        <span class="n">output_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">top_features</span><span class="p">])</span>
+        <span class="n">output_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finished.&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">top_features</span><span class="p">])</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, &#34;IBM Corp..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
