@@ -19,7 +19,7 @@ Geno4SD provides access to individual tools as well as detailed use cases for an
 
 ## Installation and Tutorials
 In our detailed [Online Documentation](https://computationalgenomics.github.io/Geno4SD/) you'll find:
-* Installation [instructions]().  
+* Installation [instructions](https://computationalgenomics.github.io/Geno4SD/source/installation.html#install-geno4sd).  
 * An overview of Geno4SD's [main components]() and [API]()
 * An end-to-end [tutorial]() using a publicly available dataset.
 
