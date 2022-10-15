@@ -2,7 +2,7 @@
 
 
 [![Build Status](https://travis.ibm.com/ComputationalGenomics/Geno4SD.svg?token=8XHVVZSCStEbEBxrmvno&branch=main)](https://travis.ibm.com/ComputationalGenomics/Geno4SD)
-[![GitHub Pages](https://img.shields.io/badge/docs-sphinx-blue)](https://pages.github.com/ComputationalGenomics/Geno4SD/)
+[![GitHub Pages](https://img.shields.io/badge/docs-sphinx-blue)](https://computationalgenomics.github.io/Geno4SD/)
 
 
 Geno4SD is an omics data toolkit for the analysis of omics data across biological scales, from single-cell analysis to large patient cohorts, and over multiple modalities, including genomics, transcriptomics, clinical medical data, and patient demographics. Within this toolkit are analytic methods that span phylogenetics, epidemilogy, topological data analysis, and ML/AL frameworks for omics scale data.
@@ -18,7 +18,7 @@ Geno4SD provides access to individual tools as well as detailed use cases for an
 
 
 ## Installation and Tutorials
-In our detailed [Online Documentation](https://pages.github.com/ComputationalGenomics/Geno4SD/) you'll find:
+In our detailed [Online Documentation](https://computationalgenomics.github.io/Geno4SD/) you'll find:
 * Installation [instructions]().  
 * An overview of Geno4SD's [main components]() and [API]()
 * An end-to-end [tutorial]() using a publicly available dataset.
