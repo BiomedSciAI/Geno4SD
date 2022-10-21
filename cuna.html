@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Search &mdash; Geno4SD  documentation</title>
+  <title>CuNA &mdash; Geno4SD  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -16,10 +16,10 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
-    <script src="_static/searchtools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial" href="source/tutorial.html" />
+    <link rel="prev" title="RubricOE" href="rubricoe.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -30,7 +30,7 @@
             <a href="index.html" class="icon icon-home"> Geno4SD
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -42,11 +42,19 @@
 <li class="toctree-l1"><a class="reference internal" href="source/installation.html">Getting Started</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="source/overview.html">Overview of Geno4SD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reveal.html">ReVeaL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rubricoe.html">RubricOE</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cuna.html">CuNA</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CuNA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input">Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output">Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contact">Contact</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="source/tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -70,8 +78,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Search</li>
+      <li>CuNA</li>
       <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cuna.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -79,22 +88,41 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search functionality.
-    </p>
-  </div>
-  </noscript>
+  <section id="cuna">
+<h1>CuNA<a class="headerlink" href="#cuna" title="Permalink to this headline"></a></h1>
+<p>CuNA or Cumulant-based Network Analysis finds higher-order genotype-phenotype relationships from multi-omic data with EHR information across different thresholds of statistical significance.</p>
+<section id="input">
+<h2>Input<a class="headerlink" href="#input" title="Permalink to this headline"></a></h2>
+<p>CuNA takes a csv file as input with the features in columns and samples in rows (see <cite>./sample_data/CuNA_TCGA_sample_data.csv</cite>). It is multithreaded and takes an argument for number of threads</p>
+</section>
+<section id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline"></a></h2>
+<p>CuNA outputs three files:</p>
+<ol class="loweralpha simple">
+<li><p>Network file with three columns, <cite>v1</cite>,`v2`,`count`, corresponding to two vertices and the interaction/edge term between them.</p></li>
+<li><p>A file with the communities corresponding to the features.</p></li>
+<li><p>A file with the node rank (importance of node)</p></li>
+</ol>
+<section id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h3>
+<p>See <cite>./tutorial/CuNA.ipynb</cite></p>
+</section>
+<section id="contact">
+<h3>Contact<a class="headerlink" href="#contact" title="Permalink to this headline"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Aritra</span> <span class="pre">Bose</span> <span class="pre">(a</span> <span class="pre">dot</span> <span class="pre">bose</span> <span class="pre">at</span> <span class="pre">ibm</span> <span class="pre">dot</span> <span class="pre">com)</span>
+<span class="pre">`</span></code></p>
+</section>
+</section>
+</section>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rubricoe.html" class="btn btn-neutral float-left" title="RubricOE" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="source/tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
@@ -116,14 +144,7 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-  <script>
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script id="searchindexloader"></script>
-   
-
+  </script> 
 
 </body>
 </html>
