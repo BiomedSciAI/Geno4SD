@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 
 project = 'Geno4SD'
-copyright = '2022, "IBM Corp.'
+copyright = '2022, IBM Corp.'
 author = 'Filippo Utro, Kahn Rhrissorrakrai'
 
 # -- Generate API (auto) documentation ------------------------------------------------

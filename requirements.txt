@@ -4,6 +4,7 @@ pandas
 scikit-learn
 pyvis
 networkx
+netgraph
 scipy
 sklearn
 scikit-learn

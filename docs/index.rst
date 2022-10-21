@@ -21,6 +21,7 @@ Welcome to Geno4SD's documentation!
    Overview of Geno4SD <source/overview.md>
    ReVeaL <reveal>
    RubricOE <rubricoe>
+   CuNA <cuna>
    Tutorial <source/tutorial.md>
 
 
@@ -30,6 +31,7 @@ Welcome to Geno4SD's documentation!
 
    geno4sd<api/geno4sd>
    ML Tools<api/geno4sd.ml_tools>
+   Topology<api/geno4sd.topology>
    Utils<api/geno4sd.utils>
 
 
