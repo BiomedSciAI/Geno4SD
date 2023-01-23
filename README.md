@@ -27,7 +27,7 @@ ngth in higher-order interactions.
 
    CuNA tutorial can be found here: [tutorial](https://github.com/ComputationalGenomics/Geno4SD/blob/main/tutorials/CuNA.ipynb)
 
-   *CuNAviz*, the visualization tool for CuNA can be found here: [CuNAviz](https://htmlpreview.github.io/?https://github.com/BiomedSciAI/Geno4SD/blob/statgen/docs/data/cunaviz_demo.html)
+   *CuNAviz*, the visualization tool for CuNA can be found here: [CuNAviz](https://rawcdn.githack.com/BiomedSciAI/Geno4SD/98784437396363a680e7ecac9d98509793f48cfc/docs/data/cunaviz_demo.html)
 
 3. **RubricOE: a rubric for omics epidemiology** is a cross-validated  machine learning framework with feature ranking described and multiple levels of cross validation to obtain interpretable genetic and non-genetic features from multi-omics data combined.
 
