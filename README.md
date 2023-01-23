@@ -14,13 +14,13 @@ Geno4SD provides access to individual tools as well as detailed use cases for an
 
 1. ReVeaL: _Rare Variant Learning_, is a stochastic regularization-based learning algorithm. It partitions the genome into non-overlapping, possibly non-contiguous, windows (_w_) and then aggregates samples into possibly overlapping subsets, using subsampling with replacement (stochastic), giving units called shingles that are utilized by a statistical learning algorithm. Each shingle captures a distribution of the mutational load (the number of mutations in the window _w_ of a given sample), and the first four moments are used as an approximation of the distribution.
 
-...ReVeaL tutorial can be found here: [tutorial](https://github.com/BiomedSciAI/Geno4SD/blob/main/tutorials/ReVeaL.ipynb)
+-- ReVeaL tutorial can be found here: [tutorial](https://github.com/BiomedSciAI/Geno4SD/blob/main/tutorials/ReVeaL.ipynb)
 
 2. CuNA:  _Cumulant-based Network Analysis_ finds higher-order genotype-phenotype relationships from multi-omic data with EHR information across different thresholds of statistical significance.
 
-...CuNA tutorial can be found here: [tutorial](https://github.com/ComputationalGenomics/Geno4SD/blob/main/tutorials/CuNA.ipynb)
+-- CuNA tutorial can be found here: [tutorial](https://github.com/ComputationalGenomics/Geno4SD/blob/main/tutorials/CuNA.ipynb)
 
-...CuNAviz, the visualization tool for CuNA can be found here: [CuNAviz](https://htmlpreview.github.io/?https://github.com/BiomedSciAI/Geno4SD/blob/statgen/docs/data/cunaviz_demo.html)
+-- CuNAviz, the visualization tool for CuNA can be found here: [CuNAviz](https://htmlpreview.github.io/?https://github.com/BiomedSciAI/Geno4SD/blob/statgen/docs/data/cunaviz_demo.html)
 
 3. RubricOE: is a cross-validated  machine learning framework with feature ranking described and multiple levels of cross validation to obtain interpretable genetic and non-genetic features from genomic or transcriptomic data combined.
 
