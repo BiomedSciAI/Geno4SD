@@ -18,7 +18,7 @@ Geno4SD provides access to individual tools as well as detailed use cases for an
 
 CuNA tutorial can be found here: [tutorial](https://github.com/ComputationalGenomics/Geno4SD/blob/main/tutorials/CuNA.ipynb)
 
-CuNAviz, the visualization tool for CuNA can be found here: [CuNAviz]
+CuNAviz, the visualization tool for CuNA can be found here: [CuNAviz](https://htmlpreview.github.io/?https://github.com/BiomedSciAI/Geno4SD/blob/statgen/docs/data/cunaviz_demo.html)
 
 3. RubricOE: is a cross-validated  machine learning framework with feature ranking described and multiple levels of cross validation to obtain interpretable genetic and non-genetic features from genomic or transcriptomic data combined.
 
