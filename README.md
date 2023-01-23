@@ -12,9 +12,9 @@ Geno4SD provides access to individual tools as well as detailed use cases for an
 
 ## Analytic tools included in Geno4SD
 
-   1.  **ReVeaL: _Rare Variant Learning_** is a stochastic regularization-based learning algorithm. It partitions the genome into non-overlapping, possibly non-contiguous, windows (_w_) and then aggregates samples into possibly overlapping subsets, using subsampling with replacement (stochastic), giving units called shingles that are utilized by a statistical learning algorithm. Each shingle captures a distribution of the mutational load (the number of mutations in the window _w_ of a given sample), and the first four moments are used as an approximation of the distribution.
+1.  **ReVeaL: _Rare Variant Learning_** is a stochastic regularization-based learning algorithm. It partitions the genome into non-overlapping, possibly non-contiguous, windows (_w_) and then aggregates samples into possibly overlapping subsets, using subsampling with replacement (stochastic), giving units called shingles that are utilized by a statistical learning algorithm. Each shingle captures a distribution of the mutational load (the number of mutations in the window _w_ of a given sample), and the first four moments are used as an approximation of the distribution.
 
-   ReVeaL tutorial can be found here: [tutorial](https://github.com/BiomedSciAI/Geno4SD/blob/main/tutorials/ReVeaL.ipynb)
+    ReVeaL tutorial can be found here: [tutorial](https://github.com/BiomedSciAI/Geno4SD/blob/main/tutorials/ReVeaL.ipynb)
 
 2. **CuNA:  _Cumulant-based Network Analysis_** is a toolkit for integrating and analyzing multi-omics data which finds higher-order relationships from multi-omic data with EHR information across different thresholds of statistical significance.
 CuNA provides two components:
