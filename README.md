@@ -19,9 +19,10 @@ Geno4SD provides access to individual tools as well as detailed use cases for an
 2. CuNA:  _Cumulant-based Network Analysis_ is a toolkit for integrating and analyzing multi-omics data which finds higher-order relationships from multi-omic data with EHR information across different thresholds of statistical significance.
 CuNA provides two components:
         
-        1. A network with nodes representing multi-omics variables and edges reflecting their stre
+    1. A network with nodes representing multi-omics variables and edges reflecting their stre
 ngth in higher-order interactions.
-        2. A risk score, CuRES, which is a holistic view of risk or liability of a target trait or
+
+    2. A risk score, CuRES, which is a holistic view of risk or liability of a target trait or
  disease, per individual.
 
    CuNA tutorial can be found here: [tutorial](https://github.com/ComputationalGenomics/Geno4SD/blob/main/tutorials/CuNA.ipynb)
