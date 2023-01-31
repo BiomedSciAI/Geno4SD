@@ -78,32 +78,75 @@ def fit_model(x_tr, y_tr):
     
     return model, best_params
  
+def fit_mc_model(x_tr, y_tr):
     
+    
+    param_grid = [
+            {'penalty': ['l1','l2',], 
+             'C': np.logspace(-3,3,7),
+             'max_iter': [1000],
+             'solver': ['liblinear'],
+             'multi_class' : ['ovr']},
+        
+            {'penalty': ['l2'], 
+             'C': np.logspace(-3,3,7),
+             'max_iter': [500],
+             'solver': ['newton-cg'],
+             'multi_class' : ['ovr']}
+             ]
+    
+    
+    log_reg = LR(random_state=123)
+    log_reg_cv = GridSearchCV(log_reg, 
+                              param_grid=param_grid, 
+                              scoring='f1_macro',
+                              n_jobs=-1,
+                              cv=5)
+       
+
+    model = log_reg_cv.fit(x_tr, y_tr)
+    best_params = model.best_params_
+    
+    logreg = LR(C=best_params['C'],
+                max_iter = best_params['max_iter'],
+                penalty = best_params['penalty'],
+                solver = best_params['solver'],
+                multi_class = best_params['multi_class'])
+    
+    model = logreg.fit(x_tr, y_tr)
+    
+    return model, best_params
+
 def accuracy_stats(x_te, 
                    y_te, 
                    y_pred,
-                   model):
+                   model,
+                   multi_class=False):
     
     res = {}
     res['confusion matrix'] =confusion_matrix(y_te, y_pred)
     res['f1'] = f1_score(y_te, y_pred, average='weighted')
-    res['ROC AUC'] = roc_auc_score(y_te, model.predict_proba(x_te)[:,1])  
+    if multi_class == False:
+        res['ROC AUC'] = roc_auc_score(y_te, model.predict_proba(x_te)[:,1])  
     
     return res
 
-def print_scores(model, res):
+
+def print_scores(model, res, multi_class=False):
         print("-------------------------------------")
         print("Model fitting complete")
         print("-------------------------------------")
-
-        TN, FP, FN, TP = res['confusion matrix'].ravel()
-        print('True Positive(TP)  = ', TP)
-        print('False Positive(FP) = ', FP)
-        print('True Negative(TN)  = ', TN)
-        print('False Negative(FN) = ', FN)
-        print("-------------------------------------")
-        print("ROC AUC score of fitted model on test data: ", res['ROC AUC'])
-        print("-------------------------------------")
+        
+        if multi_class == False:
+            TN, FP, FN, TP = res['confusion matrix'].ravel()
+            print('True Positive(TP)  = ', TP)
+            print('False Positive(FP) = ', FP)
+            print('True Negative(TN)  = ', TN)
+            print('False Negative(FN) = ', FN)
+            print("-------------------------------------")
+        
+            print("ROC AUC score of fitted model on test data: ", res['ROC AUC'])
+            print("-------------------------------------")
         
         print("F1 score of fitted model on test data: ", res['f1'])
         print("-------------------------------------")
@@ -129,21 +172,28 @@ def fit_logit(X,y):
 def get_cures(df, 
               pheno,
               verbose=0, 
-              fit_cures=False):
+              fit_cures=False,
+              multi_class=False):
     
     if 'index' in df.columns:
         df.drop(['index'], axis=1, inplace=True)  
-        
+    
+    
     x_tr, x_te, y_tr, y_te = split_df(df,pheno)
-    model, best_params = fit_model(x_tr, y_tr)
+    if multi_class == False:
+        model, best_params = fit_model(x_tr, y_tr)
+    else:
+        model, best_params = fit_mc_model(x_tr, y_tr)
     
     if verbose == 1:
             print("Best performing logistic regression model on training data: ", best_params)
             
     y_pred = model.predict(x_te)
-    res = accuracy_stats(x_te, y_te, y_pred, model)
+    
+    res = accuracy_stats(x_te, y_te, y_pred, model, multi_class)
+    
     if verbose == 1:
-        print_scores(model, res)
+        print_scores(model, res, multi_class)
              
     coefs = model.coef_
     if verbose == 1: 
