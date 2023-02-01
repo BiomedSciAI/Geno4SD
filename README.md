@@ -27,7 +27,13 @@ ngth in higher-order interactions.
 
    CuNA tutorial can be found here: [tutorial](https://github.com/ComputationalGenomics/Geno4SD/blob/main/tutorials/CuNA.ipynb)
 
-   *CuNAviz*, the visualization tool for CuNA can be found here: [CuNAviz](https://rawcdn.githack.com/BiomedSciAI/Geno4SD/98784437396363a680e7ecac9d98509793f48cfc/docs/data/cunaviz_demo.html)
+   *CuNAviz*, the visualization tool for CuNA can be found here: 
+   
+   1. [CuNAviz for Parkinson's Disease](https://rawcdn.githack.com/BiomedSciAI/Geno4SD/98784437396363a680e7ecac9d98509793f48cfc/docs/data/cunaviz_demo.html)
+   2. [CuNAviz for Breast Cancer, scenario I](https://rawcdn.githack.com/BiomedSciAI/Geno4SD/8d8036b760c2fa486423681a0549ed204eb48380/docs/data/cunaviz_False_25.html)
+   3. [CuNAviz for Breast Cancer, scenario II](https://rawcdn.githack.com/BiomedSciAI/Geno4SD/8d8036b760c2fa486423681a0549ed204eb48380/docs/data/cunaviz_False_50.html)
+   4. [CuNAviz for Breast Cancer, scenario III](https://rawcdn.githack.com/BiomedSciAI/Geno4SD/8d8036b760c2fa486423681a0549ed204eb48380/docs/data/cunaviz_True_25.html)
+   5. [CuNAviz for Breast Cancer, scenario IV](https://rawcdn.githack.com/BiomedSciAI/Geno4SD/8d8036b760c2fa486423681a0549ed204eb48380/docs/data/cunaviz_True_25.html)
 
 3. **RubricOE: a rubric for omics epidemiology** is a cross-validated  machine learning framework with feature ranking described and multiple levels of cross validation to obtain interpretable genetic and non-genetic features from multi-omics data combined.
 
