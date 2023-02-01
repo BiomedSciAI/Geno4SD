@@ -16,7 +16,7 @@ CuNA takes a csv file as input with the features in columns and samples in rows 
 
 Output 
 ^^^^^^^^^^^^^^
-
+cd 
 CuNA outputs three components: 
 
 Networks 
@@ -32,7 +32,12 @@ A risk score called *CuRES* computed from multi-omics data.
 
 CuNAviz
 ----------
-An interactive visualizer, *CuNAviz* can be executed from `_CuNAviz <https://rawcdn.githack.com/BiomedSciAI/Geno4SD/98784437396363a680e7ecac9d98509793f48cfc/docs/data/cunaviz_demo.html>`_
+An interactive visualizer, *CuNAviz* can be executed from 
+
+1. `_CuNAviz example 1 <https://rawcdn.githack.com/BiomedSciAI/Geno4SD/blob/cuna/docs/data/cunaviz_False_25.html>`_
+2. `_CuNAviz example 2 <https://rawcdn.githack.com/BiomedSciAI/Geno4SD/blob/cuna/docs/data/cunaviz_False_50.html>`_
+3. `_CuNAviz example 3 <https://rawcdn.githack.com/BiomedSciAI/Geno4SD/blob/cuna/docs/data/cunaviz_True_25.html>`_
+4. `_CuNAviz example 4 <https://rawcdn.githack.com/BiomedSciAI/Geno4SD/blob/cuna/docs/data/cunaviz_True_50.html>`_
 
 Usage 
 -------
