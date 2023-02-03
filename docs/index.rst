@@ -21,6 +21,7 @@ Welcome to Geno4SD's documentation!
    Overview of Geno4SD <source/overview.md>
    ReVeaL <reveal>
    RubricOE <rubricoe>
+   LSM <lsm>
    CuNA <cuna>
    Tutorial <source/tutorial.md>
 
@@ -31,6 +32,7 @@ Welcome to Geno4SD's documentation!
 
    geno4sd<api/geno4sd>
    ML Tools<api/geno4sd.ml_tools>
+   Liquid biopsy<api/geno4sd.liquid_biopsy>
    Topology<api/geno4sd.topology>
    Utils<api/geno4sd.utils>
 
