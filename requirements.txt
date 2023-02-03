@@ -19,6 +19,7 @@ statsmodels
 matplotlib
 seaborn
 scanpy
+pysnptools
 
 # Documentation
 sphinx
