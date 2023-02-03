@@ -14,7 +14,10 @@ geno4sd package
     .. toctree::
        :maxdepth: 1
 
+       geno4sd.liquid_biopsy
        geno4sd.ml_tools
+       geno4sd.statgen
+       geno4sd.topology
        geno4sd.utils
 
 

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LSM &mdash; Geno4SD  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Geno4SD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/installation.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/overview.html">Overview of Geno4SD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reveal.html">ReVeaL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rubricoe.html">RubricOE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cuna.html">CuNA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.html">geno4sd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.ml_tools.html">ML Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.topology.html">Topology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Geno4SD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>LSM</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/lsm.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lsm">
+<h1>LSM<a class="headerlink" href="#lsm" title="Permalink to this headline"></a></h1>
+<p>Lesion Shedding Model is a mathematical model of tumor shedding that can determine the relative shedding levels of lesions found in a patient. The LSM operates in two modes: 1) single time point mode using the most proximal cfDNA sample to the lesion biopsies, and 2) longitudinal mode where each cfDNA sample is analyzed to reveal dynamics in lesion shedding.</p>
+<section id="method">
+<h2>Method<a class="headerlink" href="#method" title="Permalink to this headline"></a></h2>
+<p>This is a schematic view of LSM processing flow</p>
+<img alt="_images/LSMWorkflow.png" src="_images/LSMWorkflow.png" />
+<section id="compute">
+<h3>Compute<a class="headerlink" href="#compute" title="Permalink to this headline"></a></h3>
+<p>The entire LSM pipeline can be executed by:</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/geno4sd.liquid_biopsy.LSM.LSM.html#geno4sd.liquid_biopsy.LSM.LSM.compute_shedding" title="geno4sd.liquid_biopsy.LSM.LSM.compute_shedding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_shedding</span></code></a>(paramFile)</p></td>
+<td><p>Function to compute and plot the relative shedding of lesions from cfDNA</p></td>
+</tr>
+</tbody>
+</table>
+<p>An example of usage can be found in this  <a class="reference external" href="https://github.com/BiomedSciAI/Geno4SD/blob/main/tutorials/LSM_tutorial.ipynb">tutorial</a></p>
+</section>
+</section>
+<section id="input-output-format">
+<h2>Input/Output Format<a class="headerlink" href="#input-output-format" title="Permalink to this headline"></a></h2>
+<section id="input-parameters">
+<h3>Input Parameters<a class="headerlink" href="#input-parameters" title="Permalink to this headline"></a></h3>
+<p>The input to the LSM model can be provided as a table in  <cite>csv</cite>, as follow (including header):</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>param</p></th>
+<th class="head"><p>value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>outputDir</p></td>
+<td><p>string path to directory that all output should be created</p></td>
+</tr>
+<tr class="row-odd"><td><p>workingDate</p></td>
+<td><p>interger indicating the date of the experiment</p></td>
+</tr>
+<tr class="row-even"><td><p>sampleFile</p></td>
+<td><p>string path to sample info CSV file</p></td>
+</tr>
+<tr class="row-odd"><td><p>mafFile</p></td>
+<td><p>string data file in a modified MAF format. By default the LSM runs in single-time point mode and analyzes all patients in the MAF file</p></td>
+</tr>
+<tr class="row-even"><td><p>patientMulti</p></td>
+<td><p>string (primaryParticipantID) used to run LSM in longitudinal rather than single-time</p></td>
+</tr>
+<tr class="row-odd"><td><p>simPatient</p></td>
+<td><p>string (primaryParticipantID) on which to perform a simulation. This flag automatically engages this mode.</p></td>
+</tr>
+<tr class="row-even"><td><p>simPatientIndex</p></td>
+<td><p>array If running in simulation mode, then providing this ARRAY provides the start and end of the range for the number of total simulations to run.</p></td>
+</tr>
+<tr class="row-odd"><td><p>nthreads</p></td>
+<td><p>integer number of threads</p></td>
+</tr>
+<tr class="row-even"><td><p>subSampleSize</p></td>
+<td><p>integer number of lesions to subsample k</p></td>
+</tr>
+<tr class="row-odd"><td><p>discreteRange</p></td>
+<td><p>array range and increment size from which to draw alpha’s. Expects 3 elements - start, end, increment.  E.g. “0.05,1.05, 0.25”</p></td>
+</tr>
+<tr class="row-even"><td><p>startIndex</p></td>
+<td><p>integer Index to begin subsamplings. Each run will create a “Run[Index]” directory that contains results from that subsample.</p></td>
+</tr>
+<tr class="row-odd"><td><p>endIndex</p></td>
+<td><p>integer Index to end subsamplings. This will determine the total number of subsamplings performed.</p></td>
+</tr>
+<tr class="row-even"><td><p>ccfLesionThreshold</p></td>
+<td><p>float The ct CCF threshold below which alterations within lesions are filtered when constructing HB.</p></td>
+</tr>
+<tr class="row-odd"><td><p>dropNullTissue</p></td>
+<td><p>Boolean to indciate whether to ignore tissues without tumor fraction data.</p></td>
+</tr>
+<tr class="row-even"><td><p>edgeThres</p></td>
+<td><p>float Threshold above which to connect a source and target lesion in the consensus graph.</p></td>
+</tr>
+<tr class="row-odd"><td><p>simBloodAlphas</p></td>
+<td><p>array Discrete alpha values to assign to lesions in simulated blood construction. Lesions are randomly assigned each of the specified elements and the remainder are assigned 0.05, e.g. “1.0,0.6,0.3”</p></td>
+</tr>
+<tr class="row-even"><td><p>addUniqSimAlterations</p></td>
+<td><p>integer Number of random mutation to spike into simulated blood samples.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ccfRandom</p></td>
+<td><p>Boolean to indicate whether spiked in mutations are assigned CCFs randomly drawn from a uniform distribution.</p></td>
+</tr>
+<tr class="row-even"><td><p>saveIntermediate</p></td>
+<td><p>Boolean to indicate whether to save intermediary files</p></td>
+</tr>
+<tr class="row-odd"><td><p>nSamplesCI</p></td>
+<td><p>integer number of subsamplings to perform to calculate confidence intervals</p></td>
+</tr>
+<tr class="row-even"><td><p>sampThresCI</p></td>
+<td><p>float number indicating what fraction of runs to subsample</p></td>
+</tr>
+</tbody>
+</table>
+<p>An example can be found here <a class="reference download internal" download="" href="_downloads/808fcfa2ea82daa512813fd47187b5fd/parameters_Test.txt"><code class="xref download docutils literal notranslate"><span class="pre">csv</span></code></a></p>
+</section>
+<section id="mutation-maf-file">
+<h3>Mutation MAF FILE<a class="headerlink" href="#mutation-maf-file" title="Permalink to this headline"></a></h3>
+<p>The LSM expects a modified, compiled MAF file of all patient data to be analyzed
+with the following minimal fields containing the following:</p>
+<ul class="simple">
+<li><p><em>primaryParticipantID</em>: normalized patient ID</p></li>
+<li><p><em>primarySampleID</em>: normalized sample ID</p></li>
+<li><p><em>Hugo_Symbol</em>: Gene Hugo Symbol</p></li>
+<li><p><em>Start_position</em>: Start position of alteration</p></li>
+<li><p><em>Reference_Allele</em>: Reference Allele</p></li>
+<li><p><em>Tumor_Seq_Allele2</em>: Tumor Allele</p></li>
+<li><p><em>Chromosome</em>: Chromosome</p></li>
+<li><p><em>ccf_hat</em>: CCF or VAF value</p></li>
+<li><p><em>File</em>: Original MAF filename from which the mutation is compiled from.</p></li>
+</ul>
+</section>
+<section id="sample-info-file">
+<h3>Sample info FILE<a class="headerlink" href="#sample-info-file" title="Permalink to this headline"></a></h3>
+<p>The sample info file contains relevant clincial information in a CSV format with the folloowing minimal fields:</p>
+<ul class="simple">
+<li><p><em>primaryParticipantID</em>: normalized patient ID</p></li>
+<li><p><em>primarySampleID</em>: normalized sample ID</p></li>
+<li><p><em>participantID</em>: sample patient ID</p></li>
+<li><p><em>sampleID</em>: original sample ID</p></li>
+<li><p><em>tumor_fraction</em>: the tumor fraction of the sample</p></li>
+<li><p><em>days_from_dx</em>: date of sample as days from diagnosis</p></li>
+<li><p><em>tissueSite</em>: tissue from which the sample was taken. If missing leave blank. If the sample is cfDNA, then enter <em>blood</em></p></li>
+<li><p><em>tissueSiteSimple</em>: additional tissue location column if a simplified tissue location desired. This may be the same value as the <em>tissueSite</em> for simplicity.</p></li>
+</ul>
+</section>
+<section id="output">
+<h3>Output<a class="headerlink" href="#output" title="Permalink to this headline"></a></h3>
+<p>The LSM produces an output directory as specified in the parameters file with the final consensus results. The parameters file
+is copied into the output directory. <em>ConsensusDirectedNetwork_lesionOrdering</em> contains the consensus shedding results.
+PNG graph images for the simplified and detailed networks are produced. In addition, CSV files describing the graph topologies
+as well as network files to ease import into other graphing packages are provided.</p>
+<p>If the LSM is run in the longitudinal mode, then all output files are keyed by the specific cfDNA sample ID being analyzed.</p>
+<p>If the LSM is run in simulation mode then all simulated runs for a given <em>simRunIndex</em> are output into folder <em>SimRun[XXX]</em>.
+This folder also contains a pickle object of the simulated clinical data and CSV of simulated MAF data for the respective
+simulation. <em>ConsensusDirectedNetwork_lesionOrdering</em> is created within each.</p>
+</section>
+</section>
+<section id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Permalink to this headline"></a></h2>
+<p>Kahn Rhrissorrakrai, Filippo Utro, Chaya Levovitz, and Laxmi Parida. Lesion Shedding Model: unraveling site-specific
+contributions to ctDNA. <cite>Briefing in Bioinformatics</cite> (to appear)</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, IBM Corp..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

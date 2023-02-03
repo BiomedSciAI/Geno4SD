@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial &mdash; Geno4SD  documentation</title>
+  <title>geno4sd.liquid_biopsy.LSM package &mdash; Geno4SD  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,8 +18,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="geno4sd package" href="../api/geno4sd.html" />
-    <link rel="prev" title="CuNA" href="../cuna.html" /> 
+    <link rel="next" title="geno4sd.liquid_biopsy.LSM.LSM module" href="geno4sd.liquid_biopsy.LSM.LSM.html" />
+    <link rel="prev" title="geno4sd.liquid_biopsy package" href="geno4sd.liquid_biopsy.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -39,22 +39,35 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source/installation.html">Getting Started</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview of Geno4SD</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../source/overview.html">Overview of Geno4SD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reveal.html">ReVeaL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rubricoe.html">RubricOE</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cuna.html">CuNA</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../source/tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../api/geno4sd.html">geno4sd</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api/geno4sd.ml_tools.html">ML Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api/geno4sd.topology.html">Topology</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api/geno4sd.utils.html">Utils</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="geno4sd.html">geno4sd</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="geno4sd.liquid_biopsy.html">geno4sd.liquid_biopsy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">geno4sd.liquid_biopsy.LSM package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="geno4sd.liquid_biopsy.LSM.LSM.html">geno4sd.liquid_biopsy.LSM.LSM module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="geno4sd.ml_tools.html">geno4sd.ml_tools package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geno4sd.statgen.html">geno4sd.statgen package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geno4sd.topology.html">geno4sd.topology package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geno4sd.utils.html">geno4sd.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="geno4sd.ml_tools.html">ML Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="geno4sd.topology.html">Topology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="geno4sd.utils.html">Utils</a></li>
 </ul>
 
         </div>
@@ -71,9 +84,11 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Tutorial</li>
+          <li><a href="geno4sd.html">geno4sd package</a> &raquo;</li>
+          <li><a href="geno4sd.liquid_biopsy.html">geno4sd.liquid_biopsy package</a> &raquo;</li>
+      <li>geno4sd.liquid_biopsy.LSM package</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/source/tutorial.md.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/api/geno4sd.liquid_biopsy.LSM.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -81,23 +96,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="tutorial">
-<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline"></a></h1>
-<p>An example of usage can of:</p>
-<ul class="simple">
-<li><p>ReVeaL can found in this  <a class="reference external" href="https://github.com/biomedsciai/Geno4SD/blob/main/tutorials/ReVeaL.ipynb">tutorial</a></p></li>
-<li><p>RubricOE can be found in this  <a class="reference external" href="https://github.com/biomedsciai/Geno4SD/blob/main/tutorials/RubricOE.ipynb">tutorial</a></p></li>
-<li><p>CuNA can be found in this  <a class="reference external" href="https://github.com/biomedsciai/Geno4SD/blob/main/tutorials/CuNA.ipynb">tutorial</a></p></li>
-<li><p>LSM can be found in this <a class="reference external" href="https://github.com/BiomedSciAI/Geno4SD/blob/main/tutorials/LSM_tutorial.ipynb">tutorial</a></p></li>
+  <section id="module-geno4sd.liquid_biopsy.LSM">
+<span id="geno4sd-liquid-biopsy-lsm-package"></span><h1>geno4sd.liquid_biopsy.LSM package<a class="headerlink" href="#module-geno4sd.liquid_biopsy.LSM" title="Permalink to this headline"></a></h1>
+<p>Submodules:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="geno4sd.liquid_biopsy.LSM.LSM.html">geno4sd.liquid_biopsy.LSM.LSM module</a></li>
 </ul>
+</div>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../cuna.html" class="btn btn-neutral float-left" title="CuNA" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../api/geno4sd.html" class="btn btn-neutral float-right" title="geno4sd package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="geno4sd.liquid_biopsy.html" class="btn btn-neutral float-left" title="geno4sd.liquid_biopsy package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="geno4sd.liquid_biopsy.LSM.LSM.html" class="btn btn-neutral float-right" title="geno4sd.liquid_biopsy.LSM.LSM module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
