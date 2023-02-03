@@ -43,13 +43,17 @@
 <li class="toctree-l1"><a class="reference internal" href="source/overview.html">Overview of Geno4SD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reveal.html">ReVeaL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rubricoe.html">RubricOE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lsm.html">LSM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cuna.html">CuNA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="statgen.html">StatGen</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.html">geno4sd</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.ml_tools.html">ML Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.statgen.html">Statistical Genetics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.liquid_biopsy.html">Liquid biopsy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.topology.html">Topology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.utils.html">Utils</a></li>
 </ul>
@@ -84,6 +88,7 @@
  <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#L"><strong>L</strong></a>
@@ -145,6 +150,14 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/geno4sd.utils.snpeff_tools.html#geno4sd.utils.snpeff_tools.download_genome">download_genome() (in module geno4sd.utils.snpeff_tools)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/geno4sd.utils.clustering_tools.html#geno4sd.utils.clustering_tools.eigenDecomposition">eigenDecomposition() (in module geno4sd.utils.clustering_tools)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -230,8 +243,6 @@
         <li><a href="api/geno4sd.ml_tools.rubricoe.lreb.html#module-geno4sd.ml_tools.rubricoe.lreb">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     geno4sd.ml_tools.rubricoe.rubricoe
 
@@ -239,6 +250,8 @@
         <li><a href="api/geno4sd.ml_tools.rubricoe.rubricoe.html#module-geno4sd.ml_tools.rubricoe.rubricoe">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     geno4sd.statgen
 
@@ -258,6 +271,13 @@
 
       <ul>
         <li><a href="api/geno4sd.utils.html#module-geno4sd.utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    geno4sd.utils.clustering_tools
+
+      <ul>
+        <li><a href="api/geno4sd.utils.clustering_tools.html#module-geno4sd.utils.clustering_tools">module</a>
 </li>
       </ul></li>
       <li>
@@ -302,6 +322,8 @@
         <li><a href="api/geno4sd.utils.snpeff_tools.html#module-geno4sd.utils.snpeff_tools">module</a>
 </li>
       </ul></li>
+      <li><a href="api/geno4sd.utils.clustering_tools.html#geno4sd.utils.clustering_tools.getAffinityMatrix">getAffinityMatrix() (in module geno4sd.utils.clustering_tools)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -347,6 +369,8 @@
         <li><a href="api/geno4sd.topology.html#module-geno4sd.topology">geno4sd.topology</a>
 </li>
         <li><a href="api/geno4sd.utils.html#module-geno4sd.utils">geno4sd.utils</a>
+</li>
+        <li><a href="api/geno4sd.utils.clustering_tools.html#module-geno4sd.utils.clustering_tools">geno4sd.utils.clustering_tools</a>
 </li>
         <li><a href="api/geno4sd.utils.log_odds.html#module-geno4sd.utils.log_odds">geno4sd.utils.log_odds</a>
 </li>
@@ -437,7 +461,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, IBM Corp..</p>
+    <p>&#169; Copyright 2022, &#34;IBM Corp..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

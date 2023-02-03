@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>geno4sd.utils.clustering_tools &mdash; Geno4SD  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> Geno4SD
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/installation.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Gallery</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/overview.html">Overview of Geno4SD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reveal.html">ReVeaL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rubricoe.html">RubricOE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lsm.html">LSM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cuna.html">CuNA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../statgen.html">StatGen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.html">geno4sd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.ml_tools.html">ML Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.liquid_biopsy.html">Liquid biopsy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Geno4SD</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>geno4sd.utils.clustering_tools</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for geno4sd.utils.clustering_tools</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">csgraph</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">pdist</span><span class="p">,</span> <span class="n">squareform</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<div class="viewcode-block" id="getAffinityMatrix"><a class="viewcode-back" href="../../../api/geno4sd.utils.clustering_tools.html#geno4sd.utils.clustering_tools.getAffinityMatrix">[docs]</a><span class="k">def</span> <span class="nf">getAffinityMatrix</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">n_cluster</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate affinity matrix based on input coordinates matrix and the numeber</span>
+<span class="sd">    of nearest neighbours.</span>
+<span class="sd">    </span>
+<span class="sd">    Apply local scaling based on the k nearest neighbour</span>
+<span class="sd">        References:</span>
+<span class="sd">    https://papers.nips.cc/paper/2619-self-tuning-spectral-clustering.pdf</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># calculate euclidian distance matrix</span>
+    <span class="n">dists</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">pdist</span><span class="p">(</span><span class="n">coordinates</span><span class="p">))</span> 
+    
+    <span class="c1"># for each row, sort the distances ascendingly and take the index of the </span>
+    <span class="c1">#k-th position (nearest neighbour)</span>
+    <span class="n">knn_distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">n_cluster</span><span class="p">]</span>
+    <span class="n">knn_distances</span> <span class="o">=</span> <span class="n">knn_distances</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+    
+    <span class="c1"># calculate sigma_i * sigma_j</span>
+    <span class="n">local_scale</span> <span class="o">=</span> <span class="n">knn_distances</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">knn_distances</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="n">affinity_matrix</span> <span class="o">=</span> <span class="n">dists</span> <span class="o">*</span> <span class="n">dists</span>
+    <span class="n">affinity_matrix</span> <span class="o">=</span> <span class="o">-</span><span class="n">affinity_matrix</span> <span class="o">/</span> <span class="n">local_scale</span>
+    <span class="c1"># divide square distance matrix by local scale</span>
+    <span class="n">affinity_matrix</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">affinity_matrix</span><span class="p">))]</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="c1"># apply exponential</span>
+    <span class="n">affinity_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">affinity_matrix</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">affinity_matrix</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">affinity_matrix</span></div>
+
+
+
+<div class="viewcode-block" id="eigenDecomposition"><a class="viewcode-back" href="../../../api/geno4sd.utils.clustering_tools.html#geno4sd.utils.clustering_tools.eigenDecomposition">[docs]</a><span class="k">def</span> <span class="nf">eigenDecomposition</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">plot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">topK</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method performs the eigen decomposition on a given affinity matrix</span>
+
+<span class="sd">    :param A: Affinity matrix</span>
+<span class="sd">    :param plot: plots the sorted eigen values for visual inspection</span>
+<span class="sd">    :return A tuple containing:</span>
+<span class="sd">    - the optimal number of clusters by eigengap heuristic</span>
+<span class="sd">    - all eigen values</span>
+<span class="sd">    - all eigen vectors</span>
+<span class="sd">    </span>
+<span class="sd">    References:</span>
+<span class="sd">    https://papers.nips.cc/paper/2619-self-tuning-spectral-clustering.pdf</span>
+<span class="sd">    http://www.kyb.mpg.de/fileadmin/user_upload/files/publications/attachments/Luxburg07_tutorial_4488%5b0%5d.pdf</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">csgraph</span><span class="o">.</span><span class="n">laplacian</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="c1"># LM parameter : Eigenvalues with largest magnitude (eigs, eigsh), that is, largest eigenvalues in </span>
+    <span class="c1"># the euclidean norm of complex numbers.</span>
+    <span class="n">eigenvalues</span><span class="p">,</span> <span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">LA</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Largest eigen values of input matrix&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">)),</span> <span class="n">eigenvalues</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        
+    <span class="c1"># Identify the optimal number of clusters as the index corresponding</span>
+    <span class="c1"># to the larger gap between eigen values</span>
+    <span class="n">index_largest_gap</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="n">topK</span><span class="p">]</span>
+    <span class="n">nb_clusters</span> <span class="o">=</span> <span class="n">index_largest_gap</span> <span class="o">+</span> <span class="mi">1</span>
+        
+    <span class="k">return</span> <span class="n">nb_clusters</span><span class="p">,</span> <span class="n">eigenvalues</span><span class="p">,</span> <span class="n">eigenvectors</span></div>
+    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, &#34;IBM Corp..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

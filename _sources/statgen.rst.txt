@@ -1,0 +1,40 @@
+StatGene
+============
+
+
+Method
+-------
+
+
+
+The entire StatGene pipeline can be executed by:
+
+.. autosummary::
+    ~geno4sd.ml_tools.ReVeaL.compute
+
+
+Alternative, one can using the following API:
+
+Pre-processing
+^^^^^^^^^^^^^^
+
+Collection of common pre-processing functionalities.
+
+.. autosummary::
+    ~geno4sd.ml_tools.ReVeaL.compute_mutational_load
+    ~geno4sd.ml_tools.ReVeaL.train_test_split
+    ~geno4sd.ml_tools.ReVeaL.permute_labels
+   
+
+Shingle Computation
+^^^^^^^^^^^^^^^^^^^
+
+.. autosummary::
+    ~geno4sd.ml_tools.ReVeaL.compute_shingle
+	
+
+An example of usage can be found in this  `tutorial <https://github.com/BiomedSciAI-Innersource/Geno4SD-Innersource/blob/main/tutorials/StatGen.ipynb>`_
+
+
+Citation
+--------

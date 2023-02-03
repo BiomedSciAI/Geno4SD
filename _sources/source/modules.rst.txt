@@ -6,4 +6,6 @@ geno4sd
 
    geno4sd<../api/geno4sd>
    ML Tools<../api/geno4sd.ml_tools>
+   Statistical Genetics<../api/geno4sd.statgen>
+   Liquid biopsy<../api/geno4sd.liquid_biopsy>
    Utils<../api/geno4sd.utils>

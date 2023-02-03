@@ -37,7 +37,7 @@ Shingle Computation
     ~geno4sd.ml_tools.ReVeaL.compute_shingle
 	
 
-An example of usage can be found in this  `tutorial <https://github.com/ComputationalGenomics/Geno4SD/blob/main/tutorials/ReVeaL.ipynb>`_
+An example of usage can be found in this  `tutorial <https://github.ibm.com/ComputationalGenomics/Geno4SD/blob/main/tutorials/ReVeaL.ipynb>`_
 
 
 Citation

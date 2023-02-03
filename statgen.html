@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RubricOE &mdash; Geno4SD  documentation</title>
+  <title>StatGene &mdash; Geno4SD  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,8 +18,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="LSM" href="lsm.html" />
-    <link rel="prev" title="ReVeaL" href="reveal.html" /> 
+    <link rel="next" title="Tutorial" href="source/tutorial.html" />
+    <link rel="prev" title="CuNA" href="cuna.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -45,14 +45,18 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="source/overview.html">Overview of Geno4SD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reveal.html">ReVeaL</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">RubricOE</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#method">Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rubricoe.html">RubricOE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lsm.html">LSM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cuna.html">CuNA</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">StatGen</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#method">Method</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pre-processing">Pre-processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shingle-computation">Shingle Computation</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#citation">Citation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="lsm.html">LSM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cuna.html">CuNA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="statgen.html">StatGen</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -77,9 +81,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>RubricOE</li>
+      <li>StatGene</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/rubricoe.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/statgen.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -87,49 +91,62 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="rubricoe">
-<h1>RubricOE<a class="headerlink" href="#rubricoe" title="Permalink to this headline"></a></h1>
-<img alt="_images/rubricOE_logo.png" src="_images/rubricOE_logo.png" />
+  <section id="statgene">
+<h1>StatGene<a class="headerlink" href="#statgene" title="Permalink to this headline"></a></h1>
 <section id="method">
 <h2>Method<a class="headerlink" href="#method" title="Permalink to this headline"></a></h2>
-<p>rubricOE is a machine learning framework, implementated in python, with error bar computations to obtain interpretable genetic and non-genetic features from genomic or transcriptomic data combined with clinical factors in the form of electronic health records.</p>
-<p>This is a schematic view of rubricoe’s processing flow</p>
-<img alt="_images/rubricoeflowchart.png" src="_images/rubricoeflowchart.png" />
-<p>The entire rubricOE pipeline can be executed by:</p>
+<p>The entire StatGene pipeline can be executed by:</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/geno4sd.ml_tools.rubricoe.rubricoe.html#geno4sd.ml_tools.rubricoe.rubricoe.compute" title="geno4sd.ml_tools.rubricoe.rubricoe.compute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute</span></code></a>(df, iterations, curve_steps, ...[, ...])</p></td>
-<td><p>Function to run the full RubricOE analysis</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/geno4sd.ml_tools.ReVeaL.html#geno4sd.ml_tools.ReVeaL.compute" title="geno4sd.ml_tools.ReVeaL.compute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute</span></code></a>(sample_info, label_info, ...[, ...])</p></td>
+<td><p>This function compute the mutational load and shingles, storing them in a folder as csv file</p></td>
 </tr>
 </tbody>
 </table>
-<p>Alternative RubricOE can be exectude using the available API:</p>
+<p>Alternative, one can using the following API:</p>
+<section id="pre-processing">
+<h3>Pre-processing<a class="headerlink" href="#pre-processing" title="Permalink to this headline"></a></h3>
+<p>Collection of common pre-processing functionalities.</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/geno4sd.ml_tools.rubricoe.rubricoe.html#geno4sd.ml_tools.rubricoe.rubricoe.compute_curves" title="geno4sd.ml_tools.rubricoe.rubricoe.compute_curves"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_curves</span></code></a>(X, y, iterations, ...[, ...])</p></td>
-<td><p>Splits data into <em>working</em> and <em>validation</em>, then computes as many score curves as specified in the <cite>iterations</cite> parameter using only <em>validation</em> data.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/geno4sd.ml_tools.ReVeaL.html#geno4sd.ml_tools.ReVeaL.compute_mutational_load" title="geno4sd.ml_tools.ReVeaL.compute_mutational_load"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_mutational_load</span></code></a>(sample_data, ...[, ...])</p></td>
+<td><p>Function to compute the mutational load files</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/geno4sd.ml_tools.rubricoe.rubricoe.html#geno4sd.ml_tools.rubricoe.rubricoe.compute_feature_counts" title="geno4sd.ml_tools.rubricoe.rubricoe.compute_feature_counts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_feature_counts</span></code></a>(ranked_features_list, ...)</p></td>
-<td><p>Computes the proportion of iterations where a feature was selected as a top feature according to its corresponding curve.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/geno4sd.ml_tools.ReVeaL.html#geno4sd.ml_tools.ReVeaL.train_test_split" title="geno4sd.ml_tools.ReVeaL.train_test_split"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train_test_split</span></code></a>(label_info, ...[, ...])</p></td>
+<td><p>Split data into training and test set.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/geno4sd.ml_tools.rubricoe.rubricoe.html#geno4sd.ml_tools.rubricoe.rubricoe.compute_top_features" title="geno4sd.ml_tools.rubricoe.rubricoe.compute_top_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_top_features</span></code></a>(feature_counts[, threshold])</p></td>
-<td><p>Filters out top features according to <cite>threshold</cite>.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/geno4sd.ml_tools.ReVeaL.html#geno4sd.ml_tools.ReVeaL.permute_labels" title="geno4sd.ml_tools.ReVeaL.permute_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">permute_labels</span></code></a>(label_info[, seed])</p></td>
+<td><p>Permute the sample labels.</p></td>
 </tr>
 </tbody>
 </table>
-<p>An example can be found in this  <a class="reference external" href="https://github.ibm.com/ComputationalGenomics/Geno4SD/blob/main/tutorials/RubricOE.ipynb">tutorial</a></p>
+</section>
+<section id="shingle-computation">
+<h3>Shingle Computation<a class="headerlink" href="#shingle-computation" title="Permalink to this headline"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/geno4sd.ml_tools.ReVeaL.html#geno4sd.ml_tools.ReVeaL.compute_shingle" title="geno4sd.ml_tools.ReVeaL.compute_shingle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_shingle</span></code></a>(train_samples, test_samples, ...)</p></td>
+<td><p>This function compute the shingles, generating the train and test sample</p></td>
+</tr>
+</tbody>
+</table>
+<p>An example of usage can be found in this  <a class="reference external" href="https://github.com/BiomedSciAI-Innersource/Geno4SD-Innersource/blob/main/tutorials/StatGen.ipynb">tutorial</a></p>
+</section>
 </section>
 <section id="citation">
 <h2>Citation<a class="headerlink" href="#citation" title="Permalink to this headline"></a></h2>
-<p>Please cite the following article if you use RubricOE:</p>
 </section>
 </section>
 
@@ -137,8 +154,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="reveal.html" class="btn btn-neutral float-left" title="ReVeaL" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="lsm.html" class="btn btn-neutral float-right" title="LSM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cuna.html" class="btn btn-neutral float-left" title="CuNA" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="source/tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
