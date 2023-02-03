@@ -9,3 +9,5 @@ An example of usage can of:
 
 - CuNA can be found in this  [tutorial](https://github.com/biomedsciai/Geno4SD/blob/main/tutorials/CuNA.ipynb)
 
+
+- LSM can be found in this [tutorial](https://github.com/BiomedSciAI/Geno4SD/blob/main/tutorials/LSM_tutorial.ipynb)
