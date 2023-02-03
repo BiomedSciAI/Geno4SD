@@ -1,0 +1,16 @@
+days_from_dx,participantID,sampleID,specimenType,studySite,submitted_material_type,tissueSite,tissue_site_detail,tumorNormal,tumor_state,tumor_subtype,ulp_tumor_fraction,primaryParticipantID,primarySampleID,tissueSiteSimple
+1995,Test_1547,Test-00045,blood,Test,plasma,,plasma,tumor,BB timepoint,,,Test,Test_samp1,plasma
+2044,Test_1547,Test-00139,blood,Test,plasma,,plasma,tumor,BB timepoint,,,Test,Test_samp2,plasma
+2070,Test_1547,Test-00203,blood,Test,plasma,,plasma,tumor,BB timepoint,,,Test,Test_samp3,plasma
+2114,Test_1547,Test-00306,blood,Test,plasma,,plasma,tumor,BB timepoint,,,Test,Test_samp4,plasma
+2177,Test_1547,Test-00472,blood,Test,plasma,,plasma,tumor,BB timepoint,,,Test,Test_samp5,plasma
+2186,Test_1547,Test-1,tissue,Test,tissue,Liver (UBERON:0001114),R. medial inferior liver,tumor,metastasis,,0.58,Test,Test_samp6,liver
+2186,Test_1547,Test-10,tissue,Test,tissue,Liver (UBERON:0001114),L. inferior liver,tumor,metastasis,,,Test,Test_samp7,liver
+2186,Test_1547,Test-2,tissue,Test,tissue,Liver (UBERON:0001114),L. lateral liver,tumor,metastasis,,0.76,Test,Test_samp8,liver
+2186,Test_1547,Test-3,tissue,Test,tissue,Liver (UBERON:0001114),Medial dome liver,tumor,metastasis,,0.73,Test,Test_samp9,liver
+2186,Test_1547,Test-4,tissue,Test,tissue,Liver (UBERON:0001114),R. anterior liver,tumor,metastasis,,0.13,Test,Test_samp10,liver
+2186,Test_1547,Test-5,tissue,Test,tissue,Liver (UBERON:0001114),R. posterior lateral liver,tumor,metastasis,,0.78,Test,Test_samp11,liver
+2186,Test_1547,Test-6,tissue,Test,tissue,Liver (UBERON:0001114),R. lateral superior liver,tumor,metastasis,,0.69,Test,Test_samp12,liver
+2186,Test_1547,Test-7,tissue,Test,tissue,Liver (UBERON:0001114),L. superior liver,tumor,metastasis,,0.4,Test,Test_samp13,liver
+2186,Test_1547,Test-8,tissue,Test,tissue,Liver (UBERON:0001114),R. anterior lateral liver,tumor,metastasis,,,Test,Test_samp14,liver
+2186,Test_1547,Test-9,tissue,Test,tissue,Liver (UBERON:0001114),Normal liver,normal,,,,Test,Test_samp15,liver
