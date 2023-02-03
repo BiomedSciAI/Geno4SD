@@ -20,6 +20,7 @@ matplotlib
 seaborn
 scanpy
 pysnptools
+qmplot
 
 # Documentation
 sphinx
