@@ -1,7 +1,7 @@
 # Geno4SD
 
 
-[![Build Status](https://travis.ibm.com/BiomedSciAI/Geno4SD.svg?token=8XHVVZSCStEbEBxrmvno&branch=main)](https://travis.ibm.com/ComputationalGenomics/Geno4SD)
+[![Build Status](https://github.com/BiomedSciAI/Geno4SD/actions/workflows/workflow.yml/badge.svg)](https://github.com/BiomedSciAI/Geno4SD/actions/workflows/workflow.yml)(https://travis.ibm.com/ComputationalGenomics/Geno4SD)
 [![GitHub Pages](https://img.shields.io/badge/docs-sphinx-blue)](https://biomedsciai.github.io/Geno4SD/)
 
 
