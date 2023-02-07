@@ -1,8 +1,8 @@
 # Geno4SD
 
 
-[![CI Build](https://github.com/BiomedSciAI/Geno4SD/actions/workflows/workflow.yml/badge.svg)]
-[![GitHub Pages](https://img.shields.io/badge/docs-sphinx-blue)](https://biomedsciai.github.io/Geno4SD/)
+![CI Build](https://github.com/BiomedSciAI/Geno4SD/actions/workflows/workflow.yml/badge.svg)
+![GitHub Pages](https://img.shields.io/badge/docs-sphinx-blue)](https://biomedsciai.github.io/Geno4SD/)
 
 
 Geno4SD is an omics data toolkit for the analysis of omics data across biological scales, from single-cell analysis to large patient cohorts, and over multiple modalities, including genomics, transcriptomics, clinical medical data, and patient demographics. Within this toolkit are analytic methods that span phylogenetics, epidemilogy, topological data analysis, and ML/AL frameworks for omics scale data.
