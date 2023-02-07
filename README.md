@@ -1,7 +1,7 @@
 # Geno4SD
 
 
-[![Build Status]](https://github.com/BiomedSciAI/Geno4SD/actions/workflows/workflow.yml/badge.svg)
+[![CI Build](https://github.com/BiomedSciAI/Geno4SD/actions/workflows/workflow.yml/badge.svg)]
 [![GitHub Pages](https://img.shields.io/badge/docs-sphinx-blue)](https://biomedsciai.github.io/Geno4SD/)
 
 
