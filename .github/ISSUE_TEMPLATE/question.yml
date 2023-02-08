@@ -1,0 +1,17 @@
+name: Question
+description: Suggest a new algorithm, enhancement to an existing algorithm, etc.
+labels: ['Question', 'Needs Triage']
+
+body:
+- type: textarea
+  attributes:
+    label: What do you need help with?
+    description: >
+      Please describe what you would like to do.
+    placeholder: >
+      A clear and concise description of what you want to do and what you need help with. E.g. How do I configure [...] in order to achieve [...]
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Additional context
