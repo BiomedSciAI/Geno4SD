@@ -63,7 +63,7 @@ Examples of unacceptable behavior by participants, even when presented as
 
 The entire Geno4SD community is responsible for upholding the terms of the Code
 of Conduct in Geno4SD Community events and spaces and reporting violations if
-they see them. The internal FuseMedML team at IBM is ultimately responsible for
+they see them. The internal Geno4SD team at IBM is ultimately responsible for
 clarifying the standards of acceptable behavior and enforcement, and is expected
 to take appropriate and fair corrective action in response to any instances of
 unacceptable behavior.
