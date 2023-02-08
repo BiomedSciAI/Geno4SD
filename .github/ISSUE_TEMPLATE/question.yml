@@ -1,5 +1,4 @@
 name: Question
-description: Suggest a new algorithm, enhancement to an existing algorithm, etc.
 labels: ['Question', 'Needs Triage']
 
 body:
