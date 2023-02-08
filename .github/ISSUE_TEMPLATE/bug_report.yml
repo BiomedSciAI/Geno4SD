@@ -1,0 +1,88 @@
+name: Bug Report
+description: Create a report to help us reproduce and correct the bug
+labels: ['Bug', 'Needs Triage']
+
+body:
+- type: markdown
+  attributes:
+    value: >
+      #### Before submitting a bug, please make sure the issue hasn't been already
+      addressed by searching through [the past issues](https://github.com/BiomedSciAI/Geno4SD/issues).
+- type: textarea
+  attributes:
+    label: Describe the bug
+    description: >
+      A clear and concise description of what the bug is.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Steps/Code to Reproduce
+    description: |
+      Please add a minimal code example that can reproduce the error when running it. Be as succinct as possible, **do not depend on external data files**: please generate synthetic data (e.g. using `numpy.random`) or a few lines of Python code. Example:
+
+      ```python
+      from geno4sd.topology.CuNA import cumulants, cuna, cures
+      import numpy as np 
+      import pandas as pd 
+      
+      df = pd.DataFrame(np.random.uniform(0,10,size=(15, 4)), columns=list('ABCD'))
+      cumulants_df, vec_df = cumulants.get_cumulants(df, n_thread = 4)
+      filt_cumulants_df = cumulants_df[cumulants_df['P'] < 0.05]  
+      ```
+
+      If the code is too long, feel free to put it in a public gist and link it in the issue: https://gist.github.com.
+
+      In short, **we are going to copy-paste your code** to run it and we expect to get the same result as you.
+
+      We acknowledge that crafting a reproducible code example requires some effort on your side but it really helps us quickly reproduce the problem and analyze its cause without any ambiguity. 
+      
+    placeholder: |
+      ```
+      Sample code to reproduce the problem
+      ```
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Expected Results
+    description: >
+      Please paste or describe the expected results.
+    placeholder: >
+      Example: No error is thrown.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Actual Results
+    description: |
+      Please paste or describe the results you observe instead of the expected results. If you observe an error, please paste the error message including the **full traceback** of the exception. For instance the code above raises the following exception:
+
+      ```python-traceback
+      ---------------------------------------------------------------------------
+      TypeError                                 Traceback (most recent call last)
+      <ipython-input-1-a674e682c281> in <module>
+            4 df = pd.DataFrame(np.random.uniform(0,10,size=(15, 4)), columns=list('ABCD'))
+      ----> 6 cumulants_df, vec_df = cumulants.get_cumulants(df, n_thread = 4)
+         
+      TypeError: get_cumulants() got an unexpected keyword argument 'n_thread'
+      ```
+    placeholder: >
+      Please paste or specifically describe the actual output or traceback.
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Versions
+    render: shell
+    description: |
+      Please run the following and paste the output below.
+      ```python
+      import geno4sd; geno4sd.show_versions()
+      ```
+  validations:
+    required: true
+- type: markdown
+  attributes:
+    value: >
+      Thanks for contributing 🎉!
