@@ -37,9 +37,18 @@ def calculate_patient_delta_predefined( df, pair_df ):
     """
     Function to calculate the Delta per predefined pair of samples
 
-    :param df: dataframe with samples as rows and columns as features 
-    :param pair_df: 2 column dataframe for the pair of sample IDs on which to calculate the difference
-    :return: a dataframe where rows are pairs of samples and column is the difference between those pairs
+    Parameters:
+    -----------
+    
+    df: 
+        dataframe with samples as rows and columns as features 
+    pair_df: 
+        2 column dataframe for the pair of sample IDs on which to calculate the difference
+    
+    Returns:
+    --------
+
+    a dataframe where rows are pairs of samples and column is the difference between those pairs
     
     """
     df = df.fillna(0)
@@ -65,10 +74,20 @@ def calculate_patient_delta_sliding_window_driver( df, days_dx, window_size=2):
     """
     Function to calculate Deltas over a matrix of patients
 
-    :param df: dataframe with samples as rows and columns as features, but there is a column 'patientID'
-    :param days_dx: dictionary where keys are the df indices (sample names) and the value is the date
-    :param window_size: how far apart should 2 samples be. Default is 2 so samples are adjacent
-    :return: dataframe where rows are pairs of samples and columns is the difference between those pairs
+    Parameters:
+    -----------
+    
+    df: 
+        dataframe with samples as rows and columns as features, but there is a column 'patientID'
+    days_dx: 
+        dictionary where keys are the df indices (sample names) and the value is the date
+    window_size: 
+        how far apart should 2 samples be. Default is 2 so samples are adjacent
+    
+    Returns:
+    --------
+
+    dataframe where rows are pairs of samples and columns is the difference between those pairs
 
     """
 
@@ -88,12 +107,23 @@ def calculate_patient_delta_sliding_window(df, pat_id, days_dx, window_size=2):
     """
     Function to calculate Delta and produce a matrix of sample pairs and the delta values for a given patient 
     given a window size
+   
+    Parameters:
+    -----------
+    
+    df: 
+        dataframe with samples as rows and columns as features, but there is a column 'patientID'
+    pat_id: 
+        id of patient of interest, contains in 'patientID' column of 'df'
+    days_dx: 
+        dictionary where keys are the df indices (sample names) and the value is the date
+    window_size: 
+        how far apart should 2 samples be. Default is 2 so samples are adjacent
+    
+    Returns:
+    --------
 
-    :param df: dataframe with samples as rows and columns as features, but there is a column 'patientID'
-    :param pat_id: id of patient of interest, contains in 'patientID' column of 'df'
-    :param days_dx: dictionary where keys are the df indices (sample names) and the value is the date
-    :param window_size: how far apart should 2 samples be. Default is 2 so samples are adjacent
-    :return: dataframe where rows are pairs of samples and columns is the difference between those pairs
+    dataframe where rows are pairs of samples and columns is the difference between those pairs
 
     """
     sel_mat = df[df['patientID'] == pat_id ]
@@ -126,9 +156,15 @@ def plot_cluster_patient_delta(cluster_res, title = '', savefile = ''):
     """
     Function to plot heatmap of the clustered deltas
 
-    :param cluster_res: clustered delta object
-    :param title: string for plot title
-    :param savefile: path for filename to save plot (optional)
+    Parameters:
+    -----------
+
+    cluster_res: 
+        clustered delta object
+    title: 
+        string for plot title
+    savefile: 
+        path for filename to save plot (optional)
 
     """
     delta_df = cluster_res.delta
@@ -181,10 +217,20 @@ def cluster_patient_delta( cluster_res, cluster_model = None, n_cluster = 10 ):
     """
     Function to cluster the delta values
 
-    :param cluster_res: cluster_delta object
-    :param cluster_model: scikit clustering model to be used. Default is SpectralCoClustering
-    :param n_cluster: integer specifying number of clusters to look for
-    :return: cluster_delta object with clustered results
+    Parameters:
+    -----------
+    
+    cluster_res: 
+        cluster_delta object
+    cluster_model: 
+        scikit clustering model to be used. Default is SpectralCoClustering
+    n_cluster: 
+        integer specifying number of clusters to look for
+   
+    Returns:
+    --------
+    
+    cluster_delta object with clustered results
     """
     delta_df = cluster_res.delta
 
@@ -207,16 +253,36 @@ def calculate_patient_delta( df, pair_df = None, days_dx = None, window_size = 2
     """
     Function to perform the full delta calculation and clustering
 
-    :param df: dataframe with samples as rows and columns as features, but there is a column 'patientID'
-    :param pair_df: 2 column dataframe for the pair of sample IDs on which to calculate the difference. Required if mode = 'predefined'
-    :param days_dx: dictionary where keys are the df indices (sample names) and the value is the date
-    :param window_size: how far apart should 2 samples be. Default is 2 so samples are adjacent
-    :param mode: delta mode to calculte ['predefined', 'sliding']. Default is 'predefined' for pair of samples. 'sliding' enables specifying distance between patient samples to consider.
-    :param cluster_model: scikit clustering model to be used. Default is SpectralCoClustering
-    :param n_cluster: integer specifying number of clusters to look for [None, int, list(int)]. If None, then eigengap approach used to identify optimal number of clusters. Otherwise can specify integer of number of clusters or list of integers for number of clusters of interest.
-    :param plot: boolean whether to plot heatmap.
-    :param savefile: path for filename to save plot (optional)
-    :return: cluster_delta object
+    Parameters:
+    -----------
+    df: 
+        dataframe with samples as rows and columns as features, but there is a column 'patientID'
+    pair_df: 
+        2 column dataframe for the pair of sample IDs on which to calculate the difference. Required if mode = 'predefined'
+    days_dx: 
+        dictionary where keys are the df indices (sample names) and the value is the date
+    window_size: 
+        how far apart should 2 samples be. Default is 2 so samples are adjacent
+    mode: 
+        delta mode to calculte ['predefined', 'sliding']. Default is 'predefined' for pair of samples. 'sliding' enables specifying distance between patient samples to consider.
+    cluster_model: 
+        scikit clustering model to be used. Default is SpectralCoClustering
+    n_cluster: 
+        integer specifying number of clusters to look for [None, int, list(int)]. If None, then eigengap approach used to identify optimal number of clusters. Otherwise can specify integer of number of clusters or list of integers for number of clusters of interest.
+    plot: 
+        boolean whether to plot heatmap.
+    savefile: 
+        path for filename to save plot (optional)
+    
+    Returns:
+    --------
+    cluster_delta object
+
+    References
+    ----------
+    Parikh, A.R., Leshchiner, I., Elagina, L. et al. (2019) 
+    Liquid versus tissue biopsy for detecting acquired resistance and tumor heterogeneity in gastrointestinal cancers. 
+    Nature Medicine 25: 1415–1421 . https://doi.org/10.1038/s41591-019-0561-9
 
     """
     # Run Delta in specified mode
