@@ -45,7 +45,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../rubricoe.html">RubricOE</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../lsm.html">LSM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../cuna.html">CuNA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../statgen.html">StatGen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../delta.html">Delta</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../source/tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -53,6 +53,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.html">geno4sd</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.ml_tools.html">ML Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.liquid_biopsy.html">Liquid biopsy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.topology.html">Topology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.evolution.html">Evolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/geno4sd.utils.html">Utils</a></li>
 </ul>
 
@@ -93,7 +95,8 @@
 <span class="sd">    of nearest neighbours.</span>
 <span class="sd">    </span>
 <span class="sd">    Apply local scaling based on the k nearest neighbour</span>
-<span class="sd">        References:</span>
+<span class="sd">    </span>
+<span class="sd">    References:</span>
 <span class="sd">    https://papers.nips.cc/paper/2619-self-tuning-spectral-clustering.pdf</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># calculate euclidian distance matrix</span>
@@ -122,14 +125,24 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This method performs the eigen decomposition on a given affinity matrix</span>
 
-<span class="sd">    :param A: Affinity matrix</span>
-<span class="sd">    :param plot: plots the sorted eigen values for visual inspection</span>
-<span class="sd">    :return A tuple containing:</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    </span>
+<span class="sd">    A: </span>
+<span class="sd">        Affinity matrix</span>
+<span class="sd">    plot: </span>
+<span class="sd">        plots the sorted eigen values for visual inspection</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    </span>
+<span class="sd">    A tuple containing:</span>
 <span class="sd">    - the optimal number of clusters by eigengap heuristic</span>
 <span class="sd">    - all eigen values</span>
 <span class="sd">    - all eigen vectors</span>
 <span class="sd">    </span>
 <span class="sd">    References:</span>
+
 <span class="sd">    https://papers.nips.cc/paper/2619-self-tuning-spectral-clustering.pdf</span>
 <span class="sd">    http://www.kyb.mpg.de/fileadmin/user_upload/files/publications/attachments/Luxburg07_tutorial_4488%5b0%5d.pdf</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -162,7 +175,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, &#34;IBM Corp..</p>
+    <p>&#169; Copyright 2022, IBM Corp..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -47,16 +47,16 @@
 <li class="toctree-l1"><a class="reference internal" href="rubricoe.html">RubricOE</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lsm.html">LSM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cuna.html">CuNA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="statgen.html">StatGen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="delta.html">Delta</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.html">geno4sd</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.ml_tools.html">ML Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.statgen.html">Statistical Genetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.liquid_biopsy.html">Liquid biopsy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.topology.html">Topology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.evolution.html">Evolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.utils.html">Utils</a></li>
 </ul>
 
@@ -90,7 +90,6 @@
 <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="source/installation.html">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="source/installation.html#geno4sd-basics">Geno4SD Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="source/installation.html#install-geno4sd">Install Geno4SD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="source/installation.html#troubleshooting">Troubleshooting</a></li>
 </ul>
@@ -118,13 +117,18 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="cuna.html">CuNA</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cuna.html#input">Input</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cuna.html#output">Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuna.html#framework">Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuna.html#networks">Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuna.html#cures">CuRES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuna.html#cunaviz">CuNAviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuna.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuna.html#contact">Contact</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cuna.html#citation">Citation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="statgen.html">StatGen</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="statgen.html#method">Method</a></li>
-<li class="toctree-l2"><a class="reference internal" href="statgen.html#citation">Citation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="delta.html">Delta</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="delta.html#method">Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="delta.html#citation">Citation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="source/tutorial.html">Tutorial</a></li>
@@ -134,6 +138,8 @@
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.html">geno4sd</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/geno4sd.version.html">geno4sd.version module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/geno4sd.evolution.html">geno4sd.evolution package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/geno4sd.liquid_biopsy.html">geno4sd.liquid_biopsy package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/geno4sd.ml_tools.html">geno4sd.ml_tools package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/geno4sd.statgen.html">geno4sd.statgen package</a></li>
@@ -146,12 +152,15 @@
 <li class="toctree-l2"><a class="reference internal" href="api/geno4sd.ml_tools.rubricoe.html">geno4sd.ml_tools.rubricoe package</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.statgen.html">Statistical Genetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.liquid_biopsy.html">Liquid biopsy</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/geno4sd.liquid_biopsy.LSM.html">geno4sd.liquid_biopsy.LSM package</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.topology.html">Topology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.evolution.html">Evolution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/geno4sd.evolution.Delta.html">geno4sd.evolution.Delta package</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.utils.html">Utils</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/geno4sd.utils.clustering_tools.html">geno4sd.utils.clustering_tools module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/geno4sd.utils.log_odds.html">geno4sd.utils.log_odds module</a></li>
@@ -184,7 +193,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, &#34;IBM Corp..</p>
+    <p>&#169; Copyright 2022, IBM Corp..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

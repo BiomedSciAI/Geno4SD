@@ -45,16 +45,16 @@
 <li class="toctree-l1"><a class="reference internal" href="rubricoe.html">RubricOE</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lsm.html">LSM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cuna.html">CuNA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="statgen.html">StatGen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="delta.html">Delta</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.html">geno4sd</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.ml_tools.html">ML Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.statgen.html">Statistical Genetics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.liquid_biopsy.html">Liquid biopsy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.topology.html">Topology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.evolution.html">Evolution</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.utils.html">Utils</a></li>
 </ul>
 
@@ -115,8 +115,22 @@
 </li>
       <li><a href="api/geno4sd.utils.log_odds.html#geno4sd.utils.log_odds.calculate">calculate() (in module geno4sd.utils.log_odds)</a>
 </li>
+      <li><a href="api/geno4sd.evolution.Delta.delta.html#geno4sd.evolution.Delta.delta.calculate_patient_delta">calculate_patient_delta() (in module geno4sd.evolution.Delta.delta)</a>
+</li>
+      <li><a href="api/geno4sd.evolution.Delta.delta.html#geno4sd.evolution.Delta.delta.calculate_patient_delta_predefined">calculate_patient_delta_predefined() (in module geno4sd.evolution.Delta.delta)</a>
+</li>
+      <li><a href="api/geno4sd.evolution.Delta.delta.html#geno4sd.evolution.Delta.delta.calculate_patient_delta_sliding_window">calculate_patient_delta_sliding_window() (in module geno4sd.evolution.Delta.delta)</a>
+</li>
+      <li><a href="api/geno4sd.evolution.Delta.delta.html#geno4sd.evolution.Delta.delta.calculate_patient_delta_sliding_window_driver">calculate_patient_delta_sliding_window_driver() (in module geno4sd.evolution.Delta.delta)</a>
+</li>
       <li><a href="api/geno4sd.utils.snpeff_tools.html#geno4sd.utils.snpeff_tools.cancer_analysis">cancer_analysis() (in module geno4sd.utils.snpeff_tools)</a>
 </li>
+      <li><a href="api/geno4sd.evolution.Delta.delta.html#geno4sd.evolution.Delta.delta.cluster_delta">cluster_delta (class in geno4sd.evolution.Delta.delta)</a>
+</li>
+      <li><a href="api/geno4sd.evolution.Delta.delta.html#geno4sd.evolution.Delta.delta.cluster_patient_delta">cluster_patient_delta() (in module geno4sd.evolution.Delta.delta)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/geno4sd.ml_tools.rubricoe.lreb.html#geno4sd.ml_tools.rubricoe.lreb.LinRidgeRegSVD.coef_">coef_ (LinRidgeRegSVD attribute)</a>
 </li>
       <li><a href="api/geno4sd.ml_tools.ReVeaL.html#geno4sd.ml_tools.ReVeaL.compute">compute() (in module geno4sd.ml_tools.ReVeaL)</a>
@@ -125,8 +139,6 @@
         <li><a href="api/geno4sd.ml_tools.rubricoe.rubricoe.html#geno4sd.ml_tools.rubricoe.rubricoe.compute">(in module geno4sd.ml_tools.rubricoe.rubricoe)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/geno4sd.ml_tools.rubricoe.rubricoe.html#geno4sd.ml_tools.rubricoe.rubricoe.compute_curves">compute_curves() (in module geno4sd.ml_tools.rubricoe.rubricoe)</a>
 </li>
       <li><a href="api/geno4sd.ml_tools.rubricoe.rubricoe.html#geno4sd.ml_tools.rubricoe.rubricoe.compute_feature_counts">compute_feature_counts() (in module geno4sd.ml_tools.rubricoe.rubricoe)</a>
@@ -178,6 +190,27 @@
 
       <ul>
         <li><a href="api/geno4sd.html#module-geno4sd">module</a>
+</li>
+      </ul></li>
+      <li>
+    geno4sd.evolution
+
+      <ul>
+        <li><a href="api/geno4sd.evolution.html#module-geno4sd.evolution">module</a>
+</li>
+      </ul></li>
+      <li>
+    geno4sd.evolution.Delta
+
+      <ul>
+        <li><a href="api/geno4sd.evolution.Delta.html#module-geno4sd.evolution.Delta">module</a>
+</li>
+      </ul></li>
+      <li>
+    geno4sd.evolution.Delta.delta
+
+      <ul>
+        <li><a href="api/geno4sd.evolution.Delta.delta.html#module-geno4sd.evolution.Delta.delta">module</a>
 </li>
       </ul></li>
       <li>
@@ -243,6 +276,8 @@
         <li><a href="api/geno4sd.ml_tools.rubricoe.lreb.html#module-geno4sd.ml_tools.rubricoe.lreb">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     geno4sd.ml_tools.rubricoe.rubricoe
 
@@ -250,8 +285,6 @@
         <li><a href="api/geno4sd.ml_tools.rubricoe.rubricoe.html#module-geno4sd.ml_tools.rubricoe.rubricoe">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     geno4sd.statgen
 
@@ -322,6 +355,13 @@
         <li><a href="api/geno4sd.utils.snpeff_tools.html#module-geno4sd.utils.snpeff_tools">module</a>
 </li>
       </ul></li>
+      <li>
+    geno4sd.version
+
+      <ul>
+        <li><a href="api/geno4sd.version.html#module-geno4sd.version">module</a>
+</li>
+      </ul></li>
       <li><a href="api/geno4sd.utils.clustering_tools.html#geno4sd.utils.clustering_tools.getAffinityMatrix">getAffinityMatrix() (in module geno4sd.utils.clustering_tools)</a>
 </li>
   </ul></td>
@@ -343,6 +383,12 @@
 
       <ul>
         <li><a href="api/geno4sd.html#module-geno4sd">geno4sd</a>
+</li>
+        <li><a href="api/geno4sd.evolution.html#module-geno4sd.evolution">geno4sd.evolution</a>
+</li>
+        <li><a href="api/geno4sd.evolution.Delta.html#module-geno4sd.evolution.Delta">geno4sd.evolution.Delta</a>
+</li>
+        <li><a href="api/geno4sd.evolution.Delta.delta.html#module-geno4sd.evolution.Delta.delta">geno4sd.evolution.Delta.delta</a>
 </li>
         <li><a href="api/geno4sd.liquid_biopsy.html#module-geno4sd.liquid_biopsy">geno4sd.liquid_biopsy</a>
 </li>
@@ -384,6 +430,8 @@
 </li>
         <li><a href="api/geno4sd.utils.snpeff_tools.html#module-geno4sd.utils.snpeff_tools">geno4sd.utils.snpeff_tools</a>
 </li>
+        <li><a href="api/geno4sd.version.html#module-geno4sd.version">geno4sd.version</a>
+</li>
       </ul></li>
   </ul></td>
 </tr></table>
@@ -396,6 +444,8 @@
       <li><a href="api/geno4sd.utils.snpeff_tools.html#geno4sd.utils.snpeff_tools.parse_vcf">parse_vcf() (in module geno4sd.utils.snpeff_tools)</a>
 </li>
       <li><a href="api/geno4sd.ml_tools.ReVeaL.html#geno4sd.ml_tools.ReVeaL.permute_labels">permute_labels() (in module geno4sd.ml_tools.ReVeaL)</a>
+</li>
+      <li><a href="api/geno4sd.evolution.Delta.delta.html#geno4sd.evolution.Delta.delta.plot_cluster_patient_delta">plot_cluster_patient_delta() (in module geno4sd.evolution.Delta.delta)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -461,7 +511,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, &#34;IBM Corp..</p>
+    <p>&#169; Copyright 2022, IBM Corp..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

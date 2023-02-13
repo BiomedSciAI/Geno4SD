@@ -18,7 +18,7 @@ The entire LSM pipeline can be executed by:
 .. autosummary::
     ~geno4sd.liquid_biopsy.LSM.LSM.compute_shedding
 
-An example of usage can be found in this  `tutorial <https://github.ibm.com/ComputationalGenomics/Geno4SD/blob/main/tutorials/LSM_tutorial.ipynb>`_
+An example of usage can be found in this  `tutorial <https://github.com/BiomedSciAI/Geno4SD/blob/main/tutorials/LSM_tutorial.ipynb>`_
 
 
 Input/Output Format
@@ -129,4 +129,4 @@ Citation
 --------
 
 Kahn Rhrissorrakrai, Filippo Utro, Chaya Levovitz, and Laxmi Parida. Lesion Shedding Model: unraveling site-specific 
-contributions to ctDNA. `submitted`
+contributions to ctDNA. `Briefing in Bioinformatics` (to appear)

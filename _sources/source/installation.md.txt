@@ -1,8 +1,5 @@
 # Getting Started
 
-## Geno4SD Basics
-
-....
 
 ## Install Geno4SD
 
@@ -14,15 +11,19 @@ Jupyter notebook:
 
 ```{code-block}
 # create a new virtual environment with Python 3.8
-conda create -y -n athena python=3.8
+conda create -y -n geno4sd python=3.8
 conda activate geno4sd
 
+#download latest version
+curl -L  https://github.com/ComputationalGenomics/Geno4SD/archive/main.zip
+
 # install Geno4SD
-pip install geno4sd
+pip install ./Geno4SD-main.zip
 
 # install interactive tools
 pip install jupyterlab
 ```
+
 
 ## Troubleshooting
 

@@ -18,7 +18,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="StatGene" href="statgen.html" />
+    <link rel="next" title="Delta" href="delta.html" />
     <link rel="prev" title="LSM" href="lsm.html" /> 
 </head>
 
@@ -48,15 +48,20 @@
 <li class="toctree-l1"><a class="reference internal" href="rubricoe.html">RubricOE</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lsm.html">LSM</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">CuNA</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#input">Input</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#output">Output</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#contact">Contact</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#framework">Framework</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#input">Input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output">Output</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#networks">Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cures">CuRES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cunaviz">CuNAviz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contact">Contact</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#citation">Citation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="statgen.html">StatGen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="delta.html">Delta</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -64,6 +69,7 @@
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.html">geno4sd</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.ml_tools.html">ML Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.liquid_biopsy.html">Liquid biopsy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/geno4sd.topology.html">Topology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/geno4sd.utils.html">Utils</a></li>
 </ul>
 
@@ -93,29 +99,56 @@
              
   <section id="cuna">
 <h1>CuNA<a class="headerlink" href="#cuna" title="Permalink to this headline"></a></h1>
-<p>CuNA or Cumulant-based Network Analysis finds higher-order genotype-phenotype relationships from multi-omic data with EHR information across different thresholds of statistical significance.</p>
+<img alt="_images/cunaverse.png" src="_images/cunaverse.png" />
+<p>Complex diseases are characterized by their intricate etiology, combining a variety of factors and spanning a diverse set of omics data types. To obtain insights on disease subtypes, biomarkers associated with them,and predict disease states, we need to integrate and analyze multiomics data. Here, we propose a cumulant-based network analysis toolkit (<em>CuNA</em>) which finds higher-order interactions between multiomics variables and identify disease subtypes, discover biomarkers, visualize them in an interactive dashboard, and provide a novel method to compute cumulant-based risk scores (<em>CuRES</em>) from multiomics data.</p>
+<section id="framework">
+<h2>Framework<a class="headerlink" href="#framework" title="Permalink to this headline"></a></h2>
+<img alt="_images/CuNA_pipeline.png" src="_images/CuNA_pipeline.png" />
 <section id="input">
-<h2>Input<a class="headerlink" href="#input" title="Permalink to this headline"></a></h2>
-<p>CuNA takes a csv file as input with the features in columns and samples in rows (see <cite>./sample_data/CuNA_TCGA_sample_data.csv</cite>). It is multithreaded and takes an argument for number of threads</p>
+<h3>Input<a class="headerlink" href="#input" title="Permalink to this headline"></a></h3>
+<p>CuNA takes a csv file as input with the features in columns and samples in rows (see <cite>./docs/data/tcga_mixomics_new_train_forcuna.csv</cite>). It is multithreaded and takes an argument for number of threads.</p>
 </section>
 <section id="output">
-<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline"></a></h2>
-<p>CuNA outputs three files:</p>
+<h3>Output<a class="headerlink" href="#output" title="Permalink to this headline"></a></h3>
+<p>cd
+CuNA outputs three components:</p>
+</section>
+</section>
+<section id="networks">
+<h2>Networks<a class="headerlink" href="#networks" title="Permalink to this headline"></a></h2>
 <ol class="loweralpha simple">
 <li><p>Network file with three columns, <cite>v1</cite>,`v2`,`count`, corresponding to two vertices and the interaction/edge term between them.</p></li>
 <li><p>A file with the communities corresponding to the features.</p></li>
 <li><p>A file with the node rank (importance of node)</p></li>
 </ol>
+</section>
+<section id="cures">
+<h2>CuRES<a class="headerlink" href="#cures" title="Permalink to this headline"></a></h2>
+<p>A risk score called <em>CuRES</em> computed from multi-omics data.</p>
+</section>
+<section id="cunaviz">
+<h2>CuNAviz<a class="headerlink" href="#cunaviz" title="Permalink to this headline"></a></h2>
+<p>An interactive visualizer, <em>CuNAviz</em> can be executed from</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://rawcdn.githack.com/BiomedSciAI/Geno4SD/blob/cuna/docs/data/cunaviz_False_25.html">_CuNAviz example 1</a></p></li>
+<li><p><a class="reference external" href="https://rawcdn.githack.com/BiomedSciAI/Geno4SD/blob/cuna/docs/data/cunaviz_False_50.html">_CuNAviz example 2</a></p></li>
+<li><p><a class="reference external" href="https://rawcdn.githack.com/BiomedSciAI/Geno4SD/blob/cuna/docs/data/cunaviz_True_25.html">_CuNAviz example 3</a></p></li>
+<li><p><a class="reference external" href="https://rawcdn.githack.com/BiomedSciAI/Geno4SD/blob/cuna/docs/data/cunaviz_True_50.html">_CuNAviz example 4</a></p></li>
+</ol>
+</section>
 <section id="usage">
-<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h3>
-<p>See <cite>./tutorial/CuNA.ipynb</cite></p>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
+<p>See <a class="reference external" href="https://github.com/BiomedSciAI/Geno4SD/blob/main/tutorials/CuNA.ipynb">tutorial</a></p>
 </section>
 <section id="contact">
-<h3>Contact<a class="headerlink" href="#contact" title="Permalink to this headline"></a></h3>
+<h2>Contact<a class="headerlink" href="#contact" title="Permalink to this headline"></a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">`</span>
 <span class="pre">Aritra</span> <span class="pre">Bose</span> <span class="pre">(a</span> <span class="pre">dot</span> <span class="pre">bose</span> <span class="pre">at</span> <span class="pre">ibm</span> <span class="pre">dot</span> <span class="pre">com)</span>
 <span class="pre">`</span></code></p>
 </section>
+<section id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Permalink to this headline"></a></h2>
+<p>Please cite the following article if you use CuNA: <em>Bose, A., Platt, D. E., Haiminen, N., &amp; Parida, L. (2021). CuNA: Cumulant-based Network Analysis of genotype-phenotype associations in Parkinson’s Disease. medRxiv, 2021-08.</em></p>
 </section>
 </section>
 
@@ -124,13 +157,13 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="lsm.html" class="btn btn-neutral float-left" title="LSM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="statgen.html" class="btn btn-neutral float-right" title="StatGene" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="delta.html" class="btn btn-neutral float-right" title="Delta" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, &#34;IBM Corp..</p>
+    <p>&#169; Copyright 2022, IBM Corp..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
