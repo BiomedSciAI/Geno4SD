@@ -6,3 +6,5 @@ from geno4sd.ml_tools import ReVeaL
 from geno4sd.topology.CuNA import cuna
 from geno4sd.statgen.GWAS import QC, GWAS
 from geno4sd.statgen.masklmm import MaSkLMM
+from geno4sd.evolution.Delta import delta
+from geno4sd.liquid_biopsy.LSM import LSM

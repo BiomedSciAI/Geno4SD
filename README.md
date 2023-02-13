@@ -49,6 +49,8 @@ ngth in higher-order interactions.
 5. **MaSk-LMM: _Matrix Sketching-based Linear Mixed Models_** is a method to compute linear mixed models which are widely used to perform genome-wide association studies on large biobank-scale genotype data using advances in randomized numerical linear algebra. 
 
    MaSk-LMM tutorial can be found here: [tutorial](https://github.com/BiomedSciAI/Geno4SD/blob/main/tutorials/MaSkLMM_tutorial.ipynb)
+
+6. **Delta**: Significantly associates patients without a known mechanism of resistance to those with one to suggest alterative treatment options based on the known MoR through an analysis of the changes in alterations between timepoints.
    
 ## Installation and Tutorials
 In our detailed [Online Documentation](https://biomedsciai.github.io/Geno4SD/) you'll find:
