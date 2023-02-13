@@ -10,7 +10,8 @@ def getAffinityMatrix(coordinates, n_cluster = 10):
     of nearest neighbours.
     
     Apply local scaling based on the k nearest neighbour
-        References:
+    
+    References:
     https://papers.nips.cc/paper/2619-self-tuning-spectral-clustering.pdf
     """
     # calculate euclidian distance matrix
@@ -39,14 +40,24 @@ def eigenDecomposition(A, plot = True, topK = 5):
     """
     This method performs the eigen decomposition on a given affinity matrix
 
-    :param A: Affinity matrix
-    :param plot: plots the sorted eigen values for visual inspection
-    :return A tuple containing:
+    Parameters:
+    -----------
+    
+    A: 
+        Affinity matrix
+    plot: 
+        plots the sorted eigen values for visual inspection
+    
+    Returns:
+    --------
+    
+    A tuple containing:
     - the optimal number of clusters by eigengap heuristic
     - all eigen values
     - all eigen vectors
     
     References:
+
     https://papers.nips.cc/paper/2619-self-tuning-spectral-clustering.pdf
     http://www.kyb.mpg.de/fileadmin/user_upload/files/publications/attachments/Luxburg07_tutorial_4488%5b0%5d.pdf
     """

@@ -35,7 +35,7 @@ Welcome to Geno4SD's documentation!
    ML Tools<api/geno4sd.ml_tools>
    Liquid biopsy<api/geno4sd.liquid_biopsy>
    Topology<api/geno4sd.topology>
-   Delta<apit/geno4sd.Delta>
+   Evolution<api/geno4sd.evolution>
    Utils<api/geno4sd.utils>
 
 
