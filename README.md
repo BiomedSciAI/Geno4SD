@@ -19,6 +19,8 @@ Geno4SD provides access to individual tools as well as detailed use cases for an
 
 2. **LSM: _Lesion Shedding Model_** can order lesions from the highest to the lowest ctDNA shedding for a given patient from cfDNA liquid and lesion biopsies. Our framework intrinsically models for missing/hidden lesions and operates on blood and lesion cfDNA assays to estimate the potential relative shedding levels of lesions into the blood. By characterizing the lesion-specific cfDNA shedding levels, we can better understand the mechanisms of shedding as well as more accurately contextualize and interpret cfDNA assays to improve their clinical impact.
 
+    LSM tutorial can be found here: [tutorial](https://github.com/BiomedSciAI/Geno4SD/blob/main/tutorials/LSM_tutorial.ipynb)
+
 3. **CuNA:  _Cumulant-based Network Analysis_** is a toolkit for integrating and analyzing multi-omics data which finds higher-order relationships from multi-omic data with EHR information across different thresholds of statistical significance.
 CuNA provides two components:
         
