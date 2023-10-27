@@ -15,7 +15,6 @@ import multiprocessing as mp
 import time, os, subprocess
 from itertools import combinations
 featureNumSwitchToParallel = 120
-PATH_TO_CUNA="/data/shared/burch/Geno4SD-main/geno4sd/topology/CuNA/"
 
 def tupleKeyToString( tup ):
     """
@@ -88,6 +87,10 @@ def convert_to_dict(res):
 
 def julia_vectors( args ):
 
+    """
+    Compute tensors from Julia implementation. 
+    """
+
     elem, dat, dat_df, s_order, order = args
     column_names = elem.split('&')
     column_indices = [dat_df.columns.get_loc(col) for col in column_names]
@@ -101,6 +104,10 @@ def julia_vectors( args ):
     return vec
 
 def all_julia_vectors( args ):
+
+    """
+    Compute tensors from Julia implementation. 
+    """
 
     dat_df, dat, n_threads, second_order_df, main_order, all_labels = args
 
@@ -160,6 +167,10 @@ def all_julia_vectors( args ):
 
 def julia_cumulants( args ):
 
+    """
+    Compute cumulants using Julia implementation . 
+    """
+
     global julia_res
     julia_res = []
     julia_df = pd.DataFrame()
@@ -170,12 +181,16 @@ def julia_cumulants( args ):
     f = math.factorial
     k = f(m) // f(2) // f(m-2)
 
-    np.save(PATH_TO_CUNA + 'julia_dat.npy', dat)
+    separator = "/"
+    parts = __file__.split(separator)
+    cuna_dir = separator.join(parts[:-1]) + separator
+
+    np.save(cuna_dir + 'julia_dat.npy', dat)
 
     command = "export JULIA_NUM_THREADS=8"
     result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-    command = "julia " + PATH_TO_CUNA + "cumulants.jl " + PATH_TO_CUNA + " " + str(order)
+    command = "julia " + cuna_dir + "cumulants.jl " + cuna_dir + " " + str(order)
     if verbose == 1:
         print("running:", command)
     result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -200,7 +215,7 @@ def julia_cumulants( args ):
         julia_df['k'] = list(first_order_labels) + second_order_labels + third_order_labels
         all_labels = [first_order_labels, second_order_labels, third_order_labels]
 
-    julia_out = np.load(PATH_TO_CUNA+"julia_cumulants.npz")
+    julia_out = np.load(cuna_dir+"julia_cumulants.npz")
     x = list(julia_out.files)
     x.sort()
     for elem in x:

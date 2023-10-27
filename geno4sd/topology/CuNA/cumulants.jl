@@ -1,8 +1,19 @@
+_author__ = "Myson Burch"
+__copyright__ = "Copyright 2023, IBM Research"
+__version__ = "0.1"
+__maintainer__ = "Myson Burch"
+__email__ = "myson.burch@ibm.com"
+__status__ = "Development"
+
 import Base.Threads.@threads
 
 using Cumulants, NPZ, LinearAlgebra, Random, Statistics
 
 function upper_tri(A)
+    """
+    Generate upper triangular entries of residuals
+    """
+
     # Get the dimensions of the matrix
     n, m = size(A)
 
@@ -23,6 +34,10 @@ function upper_tri(A)
 end
 
 function parse_third_order(x, n)
+    """
+    Parse third order cumulant labels
+    """
+
     third = Vector{Float64}()
     for i in 1:n
         curr_sheet = x[i,:,:]
@@ -35,6 +50,10 @@ function parse_third_order(x, n)
 end
 
 function parse_fourth_order(x, n)
+    """
+    Parse fourth order cumulant labels
+    """
+
     fourth = Vector{Float64}()
     for j in 1:n
         for i in 1:n
@@ -53,6 +72,9 @@ function parse_fourth_order(x, n)
 end
 
 function permute_dat(x)
+    """
+    Permute columns
+    """
 
     # Get the number of rows and columns in the matrix
     num_rows, num_cols = size(x)
@@ -69,6 +91,9 @@ function permute_dat(x)
 end
 
 function run_cumulants(x, order)
+    """
+    Compute cumulants
+    """
 
     # cumulants(data::Matrix{T}, order::Int = 4, block::Int = 2)
     c = cumulants(x, parse(Int,order), 4)
