@@ -9,3 +9,4 @@
 	      using Pkg
 	      Pkg.add.(["Cumulants", "NPZ", "LinearAlgebra", "Random", "Statistics"])
 
+4. Additional documentation: https://github.com/iitis/Cumulants.jl
