@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from scipy import stats
 sns.set(color_codes=True)
 
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, normalize
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression as LR
 from sklearn.model_selection import cross_val_score
@@ -37,7 +37,7 @@ import sys, os, time
 def split_df(df, pheno):
     x_tr, x_te, y_tr, y_te = train_test_split(df,
                                           pheno, 
-                                          test_size=0.2, 
+                                          test_size=0.3, 
                                           random_state=123)
     x_tr = StandardScaler().fit_transform(x_tr)
     x_te = StandardScaler().fit_transform(x_te)
@@ -173,7 +173,8 @@ def get_cures(df,
               pheno,
               verbose=0, 
               fit_cures=False,
-              multi_class=False):
+              multi_class=False,
+              get_distance=False):
     
     if 'index' in df.columns:
         df.drop(['index'], axis=1, inplace=True)  
@@ -232,7 +233,12 @@ def get_cures(df,
         logreg = fit_logit(cures, y_te)
         mdl, res_df = resDF(logreg)
         
-    return cures, cures_res, res_df
+    if get_distance:
+        D = x_tr @ x_tr.T
+        D = normalize(D, axis=1, norm='l2')
+        return cures, cures_res, res_df, D, y_te
+
+    return cures, cures_res, res_df, y_te
 
 def assoc_cures(df, 
                 pheno,
