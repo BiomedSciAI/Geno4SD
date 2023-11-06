@@ -52,7 +52,7 @@ ngth in higher-order interactions.
 
    MaSk-LMM tutorial can be found here: [tutorial](https://github.com/BiomedSciAI/Geno4SD/blob/main/tutorials/MaSkLMM_tutorial.ipynb)
 
-6. **Delta**: Significantly associates patients without a known mechanism of resistance to those with one to suggest alterative treatment options based on the known MoR through an analysis of the changes in alterations between timepoints.
+6. **Delta**: Significantly associates patients without a known mechanism of resistance (MoR) to those with one to suggest alterative treatment options based on the known MoR through an analysis of the changes in alterations between timepoints.
    
 ## Installation and Tutorials
 In our detailed [Online Documentation](https://biomedsciai.github.io/Geno4SD/) you'll find:
