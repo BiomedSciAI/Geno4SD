@@ -69,7 +69,7 @@ def test_compute_mutational_load():
     expected_df['count'] = [1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0]
     expected_df['samples'] = ['s1','s2','s4', 's1','s2','s4', 's1','s2','s4', 's1','s2','s4', 's1','s2','s4']
 
-    assert_frame_equal(expected_df.pivot('samples', 'window', 'count').fillna(0), returned_df)
+    assert_frame_equal(expected_df.pivot(index='samples', columns='window', value='count').fillna(0), returned_df)
 
 
 
