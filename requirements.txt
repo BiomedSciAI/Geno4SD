@@ -6,7 +6,6 @@ pyvis
 networkx
 netgraph
 scipy
-sklearn
 scikit-learn
 argparse
 pickle-mixin
