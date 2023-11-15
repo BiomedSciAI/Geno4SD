@@ -84,7 +84,7 @@ def compute_mutational_load(sample_data, samples, regions_size, chromosome, wind
             mutation_load_data_region['window'] = [(chromosome, start, stop, -1)] * len(mutation_load_data_region)
             mutation_load_data = pd.concat([mutation_load_data, mutation_load_data_region])
     
-    mutation_load_pivot = mutation_load_data.sort_values(['samples', 'window']).drop_duplicates().pivot('samples', 'window', 'count').fillna(0)
+    mutation_load_pivot = mutation_load_data.sort_values(['samples', 'window']).drop_duplicates().pivot(index='samples', columns='window', values='count').fillna(0)
    
     if out_file_name is not None:
         mutation_load_pivot.to_csv(out_file_name)
