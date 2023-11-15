@@ -60,7 +60,7 @@ def test_compute_mutational_load():
     expected_df['count'] = [2, 0, 1, 0, 0, 1]
     expected_df['samples'] = ['s1', 's1', 's2', 's2', 's4', 's4']
     
-    assert_frame_equal(expected_df.pivot('samples', 'window', 'count').fillna(0), returned_df)
+    assert_frame_equal(expected_df.pivot(index='samples', columns='window',  value='count').fillna(0), returned_df)
 
     returned_df = ReVeaL.compute_mutational_load(sample_data, samples.tolist(), regions_size, 'C', window_size=2)
 
