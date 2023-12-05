@@ -174,7 +174,7 @@ def julia_cumulants( args ):
     global julia_res
     julia_res = []
     julia_df = pd.DataFrame()
-    dat, dat_df, n_threads, order, verbose = args
+    dat, dat_df, n_threads, order, julia_path, verbose = args
 
     # needed for julia vector downstream
     n, m = dat_df.shape
@@ -190,7 +190,12 @@ def julia_cumulants( args ):
     command = "export JULIA_NUM_THREADS=8"
     result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
-    command = "julia " + cuna_dir + "cumulants.jl " + cuna_dir + " " + str(order)
+    # if path is empty, assuming that Julia is properly added to PATH
+    if julia_path == "":
+        command = "julia " + cuna_dir + "cumulants.jl " + cuna_dir + " " + str(order)
+    # otherwise use the user provided path to Julia
+    else:
+        command = julia_path + " " + cuna_dir + "cumulants.jl " + cuna_dir + " " + str(order)
     if verbose == 1:
         print("running:", command)
     result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -227,7 +232,7 @@ def julia_cumulants( args ):
 
     return julia_df, julia_vec_df
  
-def AllcumulantCalcParallel( dat, dat_df, n_combo, indices, n_threads, n_iter = 50, julia = 0, order = 4, verbose = 0, newRun = True, non_max_combo = None, max_combo = None ):
+def AllcumulantCalcParallel( dat, dat_df, n_combo, indices, n_threads, n_iter = 50, julia = 0, julia_path = "", order = 4, verbose = 0, newRun = True, non_max_combo = None, max_combo = None ):
 
     """
     Compute cumulants with multithreading. 
@@ -245,7 +250,7 @@ def AllcumulantCalcParallel( dat, dat_df, n_combo, indices, n_threads, n_iter = 
         # testing Julia cumulants
         if verbose == 1:
             print("computing cumulants (Julia)...")
-        julia_df, julia_vec_df = julia_cumulants( (dat, dat_df, n_threads, order, verbose) )
+        julia_df, julia_vec_df = julia_cumulants( (dat, dat_df, n_threads, order, julia_path, verbose) )
 
         return (julia_df, julia_vec_df)
 
@@ -292,6 +297,7 @@ def get_cumulants(feature_matrix,
                  combo_size = 4,
                  verbose = 0,
                  julia = 0,
+                 julia_path = "",
                  order = 4):
 
     """
@@ -360,7 +366,7 @@ def get_cumulants(feature_matrix,
     #     print("\nComputing cumulants\n")
     #start = time.time()
     k_res = {}
-    mean_df, vec_df = AllcumulantCalcParallel( dat, X, n_combo, indices, n_threads, n_iter, julia, order, verbose )
+    mean_df, vec_df = AllcumulantCalcParallel( dat, X, n_combo, indices, n_threads, n_iter, julia, julia_path, order, verbose )
     # if verbose == 1:
     #     print( len(mean_df))
     #end = time.time()
